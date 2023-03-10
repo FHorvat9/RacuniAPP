@@ -35,6 +35,7 @@ public class ProzorLogin extends javax.swing.JFrame {
         }
         if (pswLozinka.getPassword().length == 0) {
             lblPoruka.setText("Obavezna lozinka");
+            return;
         }
 
         Operater o = obrada.Autoriziraj(txtUsername.getText(), pswLozinka.getPassword());
@@ -42,8 +43,9 @@ public class ProzorLogin extends javax.swing.JFrame {
             lblPoruka.setText("Neispravna kombinacija email i lozinka");
             return;
         }
-
-        new prozorIzbornik().setVisible(true);
+        
+        Aplikacija.OPERATER=o.getUsername();
+        new ProzorIzbornik().setVisible(true);
         dispose();
 
     }
@@ -68,6 +70,7 @@ public class ProzorLogin extends javax.swing.JFrame {
 
         jLabel1.setText("Username");
 
+        txtUsername.setText("Admin");
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsernameActionPerformed(evt);
@@ -81,6 +84,7 @@ public class ProzorLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Lozinka");
 
+        pswLozinka.setText("edunova");
         pswLozinka.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 pswLozinkaKeyPressed(evt);
@@ -103,7 +107,7 @@ public class ProzorLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtUsername)
                     .addComponent(pswLozinka)
-                    .addComponent(btnAutorizitaj, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(btnAutorizitaj, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -127,7 +131,7 @@ public class ProzorLogin extends javax.swing.JFrame {
                 .addComponent(btnAutorizitaj)
                 .addGap(18, 18, 18)
                 .addComponent(lblPoruka, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -169,12 +173,12 @@ public class ProzorLogin extends javax.swing.JFrame {
                 return;
             }
             if (txtUsername.getText().isEmpty()) {
+                lblPoruka.setText("Obavezan username");
                 txtUsername.requestFocus();
+                return;
             }
-            lblPoruka.setText("Obavezan username");
-            return;
+            autoriziraj();
         }
-        autoriziraj();
 
 
     }//GEN-LAST:event_pswLozinkaKeyPressed

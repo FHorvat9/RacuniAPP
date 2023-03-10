@@ -10,5 +10,6 @@ package edunova.util;
  */
 public class Aplikacija {
     public static final String NAZIV_APP="Edunova aplikacija"; 
+    public static String OPERATER="";
     
 }

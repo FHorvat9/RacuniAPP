@@ -28,7 +28,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtUsername" max="32767" attributes="0"/>
                   <Component id="pswLozinka" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnAutorizitaj" alignment="0" pref="166" max="32767" attributes="0"/>
+                  <Component id="btnAutorizitaj" alignment="0" pref="220" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -57,7 +57,7 @@
               <Component id="btnAutorizitaj" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblPoruka" min="-2" pref="39" max="-2" attributes="0"/>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="52" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,6 +69,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsername">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Admin"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsernameActionPerformed"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtUsernameKeyPressed"/>
@@ -80,6 +83,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="pswLozinka">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="edunova"/>
+      </Properties>
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pswLozinkaKeyPressed"/>
       </Events>

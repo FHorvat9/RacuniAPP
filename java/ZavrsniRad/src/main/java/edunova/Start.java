@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  * @author dell
  */
 public class Start {
-    
+
     public static void main(String[] args) {
-//      new PocetniInsert();
+//        new PocetniInsert();
 
 //        ObradaBlagajnik ob = new ObradaBlagajnik();
 //        
@@ -35,6 +35,5 @@ public class Start {
 //            System.out.println(b.getIme());
 //        }
         new SplashScreen().setVisible(true);
-        
     }
 }
