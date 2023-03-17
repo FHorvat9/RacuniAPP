@@ -4,7 +4,11 @@
  */
 package edunova.view;
 
+import edunova.controller.ObradaBlagajnik;
 import edunova.model.Blagajnik;
+import edunova.model.Proizvod;
+import edunova.util.Aplikacija;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -15,8 +19,15 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
     /**
      * Creates new form ProzorBlagajnik
      */
+    private ObradaBlagajnik obrada;
     public ProzorBlagajnik() {
         initComponents();
+        obrada = new ObradaBlagajnik();
+        setTitle(Aplikacija.NAZIV_APP + ": "
+                + Aplikacija.OPERATER
+                + ": Blagajnici");
+        ucitaj();
+        
     }
 
     /**
@@ -44,6 +55,11 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lstPodaci);
 
         btnDodaj.setText("Dodaj");
+        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajActionPerformed(evt);
+            }
+        });
 
         btnPromjeni.setText("Promjeni");
 
@@ -118,6 +134,10 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImeActionPerformed
 
+    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDodajActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -134,4 +154,12 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
     private javax.swing.JTextField txtIme;
     private javax.swing.JTextField txtPrezime;
     // End of variables declaration//GEN-END:variables
+
+    private void ucitaj() {
+          DefaultListModel<Blagajnik> m
+                = new DefaultListModel<>();
+        m.addAll(obrada.read());
+        lstPodaci.setModel(m);
+        lstPodaci.repaint();
+    }
 }
