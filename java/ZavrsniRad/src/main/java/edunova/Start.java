@@ -6,6 +6,7 @@ package edunova;
 import edunova.controller.ObradaBlagajnik;
 import edunova.model.Blagajnik;
 import edunova.util.EdunovaException;
+import edunova.util.OibUtil;
 import edunova.util.PocetniInsert;
 import edunova.view.SplashScreen;
 import java.util.logging.Level;
@@ -18,7 +19,9 @@ import java.util.logging.Logger;
 public class Start {
 
     public static void main(String[] args) {
+       
 //        new PocetniInsert();
+
 
 //        ObradaBlagajnik ob = new ObradaBlagajnik();
 //        
@@ -35,5 +38,7 @@ public class Start {
 //            System.out.println(b.getIme());
 //        }
         new SplashScreen().setVisible(true);
+
+       
     }
 }

@@ -5,7 +5,12 @@
 package edunova.controller;
 
 import edunova.model.Blagajnik;
+import edunova.model.Racun;
+import edunova.model.StavkaRacuna;
 import edunova.util.EdunovaException;
+import edunova.util.OibUtil;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +28,8 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
     public void kontrolaUnos() throws EdunovaException {
         kontrolaIme();
         kontrolaPrezime();
+        kontrolaOib();
+        kontrolaDupliOib();
 
     }
 
@@ -30,11 +37,25 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
     public void kontrolaPromjena() throws EdunovaException {
         kontrolaIme();
         kontrolaPrezime();
+        kontrolaOib();
     }
 
     @Override
     public void kontrolaBrisanje() throws EdunovaException {
+        if (entitet.getRacuni() != null && !entitet.getRacuni().isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Blagajnik se nemoze obrisati jer se nalazi na sljedecim racunima:\n");
+            List<Integer> sortiraniBrojeviRacuna = new ArrayList<>();
+            for (Racun sr : entitet.getRacuni()) {
+                sortiraniBrojeviRacuna.add(sr.getBrojRacuna());
+            }
+            Collections.sort(sortiraniBrojeviRacuna);
 
+            for (int br : sortiraniBrojeviRacuna) {
+                sb.append(br + "\n");
+            }
+            throw new EdunovaException(sb.toString());
+        }
     }
 
     private void kontrolaIme() throws EdunovaException {
@@ -86,7 +107,8 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
         kontrolaPrezimeMaxDuzina();
         kontrolaPrezimeNijeNull();
     }
-     private void kontrolePrezimeNijeBroj() throws EdunovaException {
+
+    private void kontrolePrezimeNijeBroj() throws EdunovaException {
         boolean broj = false;
 
         try {
@@ -121,6 +143,38 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
         }
     }
 
- 
+    private void kontrolaDupliOib() throws EdunovaException {
+        List<Blagajnik> proizvodi = null;
+        try {
+            proizvodi = session.createQuery("from Blagajnik b "
+                    + " where b.oib=:oib ",
+                    Blagajnik.class)
+                    .setParameter("oib", entitet.getOib())
+                    .list();
+        } catch (Exception e) {
+        }
+        if (proizvodi != null && !proizvodi.isEmpty()) {
+            throw new EdunovaException("Blagajnik s istim oibom vec postoji");
+        }
+
+    }
+
+    private void kontrolaOib() throws EdunovaException {
+        if (entitet.getOib() == null) {
+            throw new EdunovaException("Oib ne smije biti null");
+        }
+        if (!entitet.getOib().matches("[0-9]+")) {
+            throw new EdunovaException("Oib moze sadrzavati samo brojeve");
+        }
+
+        if (entitet.getOib().length() != 11) {
+            throw new EdunovaException("Oib nije ispravne duljine");
+        }
+
+        if (!OibUtil.provjeriOib(entitet.getOib())) {
+            throw new EdunovaException("Oib nije valjan");
+        }
+
+    }
 
 }

@@ -55,6 +55,7 @@ public class PocetniInsert {
             b = new Blagajnik();
             b.setIme(faker.name().firstName());
             b.setPrezime(faker.name().lastName());
+            b.setOib(OibUtil.generirajOib());
             s.persist(b);
             blagajnici.add(b);
         }

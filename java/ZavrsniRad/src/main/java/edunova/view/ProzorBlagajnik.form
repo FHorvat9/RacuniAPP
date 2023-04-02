@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -27,7 +27,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="105" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="txtIme" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -35,6 +35,12 @@
                   <Component id="btnDodaj" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="btnPromjeni" min="-2" max="-2" attributes="0"/>
                   <Component id="btnObrisi" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="txtOib" min="-2" pref="119" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnGenOib" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="107" max="32767" attributes="0"/>
           </Group>
@@ -45,6 +51,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jScrollPane1" alignment="1" pref="288" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -53,15 +60,21 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtPrezime" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtOib" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGenOib" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnDodaj" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnPromjeni" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnObrisi" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="71" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -83,6 +96,9 @@
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="lstPodaciValueChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Blagajnik&gt;"/>
           </AuxValues>
@@ -101,11 +117,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Promjeni"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPromjeniActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnObrisi">
       <Properties>
         <Property name="text" type="java.lang.String" value="Obrisi"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObrisiActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrezime">
       <Events>
@@ -126,6 +148,24 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Prezime"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OIB"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtOib">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOibActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGenOib">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Gen"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenOibActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
