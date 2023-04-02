@@ -5,8 +5,15 @@
 package edunova.controller;
 
 import edunova.model.Proizvod;
+import edunova.model.StavkaRacuna;
 import edunova.util.EdunovaException;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -16,7 +23,20 @@ public class ObradaProizvod extends Obrada<Proizvod> {
 
     @Override
     public List<Proizvod> read() {
-        return session.createQuery("from Proizvod ", Proizvod.class).list();
+        return session.createQuery("from Proizvod order by imeProizvoda ", Proizvod.class).list();
+    }
+    
+     public List<Proizvod> read(String uvjet) {
+        uvjet=uvjet.trim();
+        uvjet = "%" + uvjet + "%";
+       return session.createQuery("from Proizvod "
+               + " where concat(imeProizvoda) "
+               + " like :uvjet "
+               + " order by imeProizvoda ", 
+               Proizvod.class)
+               .setParameter("uvjet", uvjet)
+               .setMaxResults(12)
+               .list();
     }
 
     @Override
@@ -35,14 +55,29 @@ public class ObradaProizvod extends Obrada<Proizvod> {
 
     @Override
     public void kontrolaBrisanje() throws EdunovaException {
- 
+        if (entitet.getRacuni() != null && !entitet.getRacuni().isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Proizvod se nemoze obrisati jer se nalazi na sljedecim racunima:\n");
+            List<Integer> sortiraniBrojeviRacuna = new ArrayList<>();
+            for (StavkaRacuna sr : entitet.getRacuni()) {
+                sortiraniBrojeviRacuna.add(sr.getBrojRacuna());
+            }
+            Collections.sort(sortiraniBrojeviRacuna);
+            
+            for(int br : sortiraniBrojeviRacuna){
+                sb.append(br+"\n");
+            }
+            throw new EdunovaException(sb.toString());
+        }
     }
 
     private void kontrolaImeProizvoda() throws EdunovaException {
+        kontrolaImeProizvodaNijeNull();
+        kontrolaDuploImeProizvoda();
         kontroleImeProizvodaNijeBroj();
         kontrolaImeProizvodaMinDuzina();
         kontrolaImeProizvodaMaxDuzina();
-        kontrolaImeProizvodaNijeNull();
+        
 
     }
 
@@ -97,6 +132,21 @@ public class ObradaProizvod extends Obrada<Proizvod> {
 
         if (Double.parseDouble(String.valueOf(entitet.getCijena())) > 100000) {
             throw new EdunovaException("Cijena mora biti manja od 100 000");
+        }
+    }
+
+    private void kontrolaDuploImeProizvoda() throws EdunovaException{
+        List<Proizvod> proizvodi=null;
+        try {
+            proizvodi = session.createQuery("from Proizvod p "
+                    + " where p.imeProizvoda=:imeProizvoda ", 
+                    Proizvod.class)
+                    .setParameter("imeProizvoda", entitet.getImeProizvoda())
+                    .list();
+        } catch (Exception e) {
+        }
+        if(proizvodi!=null && !proizvodi.isEmpty()){
+            throw new EdunovaException("Proizvod s istim nazivom postoji u bazi");
         }
     }
 

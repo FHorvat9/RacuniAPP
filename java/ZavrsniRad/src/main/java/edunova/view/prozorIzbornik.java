@@ -21,18 +21,18 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         initComponents();
         setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         new Vrijeme().start();
-        
+
     }
-    
+
     private class Vrijeme extends Thread {
-        
+
         private SimpleDateFormat df;
-        
+
         public Vrijeme() {
             df = new SimpleDateFormat(
                     "dd.MM.YYYY. hh:mm:ss");
         }
-        
+
         @Override
         public void run() {
             while (true) {
@@ -42,11 +42,11 @@ public class ProzorIzbornik extends javax.swing.JFrame {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-                    
+
                 }
             }
         }
-        
+
     }
 
     /**
@@ -124,18 +124,18 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
+
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        dispose();
+
         new ProzorProizvodi().setVisible(true);
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        dispose();
+
         new ProzorBlagajnik().setVisible(true);
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed

@@ -10,19 +10,22 @@ import edunova.controller.ObradaProizvod;
 import edunova.model.Proizvod;
 import edunova.util.Aplikacija;
 import edunova.util.EdunovaException;
+import java.awt.Dimension;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author Feecho
  */
 public class ProzorProizvodi extends javax.swing.JFrame {
-
+    
     private ObradaProizvod obrada;
     private DecimalFormat df;
 
@@ -36,17 +39,21 @@ public class ProzorProizvodi extends javax.swing.JFrame {
                 = new DecimalFormatSymbols(
                         new Locale("hr", "HR"));
         df = new DecimalFormat("###,##0.00", dfs);
-
+        
         setTitle(Aplikacija.NAZIV_APP + ": "
                 + Aplikacija.OPERATER
                 + ": Proizvodi");
         ucitaj();
     }
-
+    
     private void ucitaj() {
         DefaultListModel<Proizvod> m
                 = new DefaultListModel<>();
-        m.addAll(obrada.read());
+        if (!txtTrazilica.getText().isBlank()) {
+            m.addAll(obrada.read(txtTrazilica.getText()));
+        } else {
+            m.addAll(obrada.read());
+        }
         lstPodaci.setModel(m);
         lstPodaci.repaint();
     }
@@ -69,8 +76,10 @@ public class ProzorProizvodi extends javax.swing.JFrame {
         btnDodaj = new javax.swing.JButton();
         btnPromjeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
+        txtTrazilica = new javax.swing.JTextField();
+        btnTrazi = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lstPodaci.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstPodaci.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -117,13 +126,26 @@ public class ProzorProizvodi extends javax.swing.JFrame {
             }
         });
 
+        btnTrazi.setText("Trazi");
+        btnTrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTraziActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtTrazilica, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -139,10 +161,14 @@ public class ProzorProizvodi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTrazilica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTrazi)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtImeProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
@@ -154,9 +180,8 @@ public class ProzorProizvodi extends javax.swing.JFrame {
                         .addComponent(btnPromjeni)
                         .addGap(18, 18, 18)
                         .addComponent(btnObrisi)
-                        .addGap(0, 71, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addContainerGap(70, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)))
         );
 
         pack();
@@ -209,9 +234,9 @@ public class ProzorProizvodi extends javax.swing.JFrame {
         if (lstPodaci.getSelectedValue() == null) {
             return;
         }
-
+        
         obrada.setEntitet(lstPodaci.getSelectedValue());
-
+        
         napuniView();
 
     }//GEN-LAST:event_lstPodaciValueChanged
@@ -227,28 +252,38 @@ public class ProzorProizvodi extends javax.swing.JFrame {
             obrada.delete();
             ucitaj();
         } catch (EdunovaException e) {
-            JOptionPane.showMessageDialog(getRootPane(), e.getPoruka());
+            JTextArea textArea = new JTextArea(e.getPoruka());
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+            scrollPane.setPreferredSize(new Dimension(300, 200));
+            JOptionPane.showMessageDialog(null, scrollPane, "Proizvod brisanje upozorenje",
+                    JOptionPane.WARNING_MESSAGE);
+            
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
 
+    private void btnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraziActionPerformed
+        ucitaj();
+
+    }//GEN-LAST:event_btnTraziActionPerformed
+    
     private void napuniModel() {
         var p = obrada.getEntitet();
-
+        
         try {
             p.setImeProizvoda(txtImeProizvoda.getText());
         } catch (Exception e) {
             p.setImeProizvoda("");
         }
-
+        
         try {
-            p.setCijena(BigDecimal.valueOf(
-                    df.parse(
-                            txtCijenaProizvoda.getText())
-                            .doubleValue()));
+            p.setCijena( BigDecimal.valueOf(df.parse(txtCijenaProizvoda.getText()).doubleValue()));
+            
         } catch (Exception e) {
             p.setCijena(BigDecimal.ZERO);
         }
-
+        
     }
     /**
      * @param args the command line arguments
@@ -259,12 +294,14 @@ public class ProzorProizvodi extends javax.swing.JFrame {
     private javax.swing.JButton btnDodaj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromjeni;
+    private javax.swing.JButton btnTrazi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Proizvod> lstPodaci;
     private javax.swing.JTextField txtCijenaProizvoda;
     private javax.swing.JTextField txtImeProizvoda;
+    private javax.swing.JTextField txtTrazilica;
     // End of variables declaration//GEN-END:variables
 
     private void napuniView() {
@@ -279,7 +316,7 @@ public class ProzorProizvodi extends javax.swing.JFrame {
         } catch (Exception e) {
             txtImeProizvoda.setText("");
         }
-
+        
     }
-
+    
 }

@@ -1,14 +1,19 @@
 package edunova.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 @Entity
 public class Proizvod extends Entitet {
 
 	private String imeProizvoda;
 	private BigDecimal cijena;
+        
+        @OneToMany(mappedBy = "proizvod")
+        private List<StavkaRacuna> racuni;
 
 	public String getImeProizvoda() {
 		return imeProizvoda;
@@ -17,6 +22,14 @@ public class Proizvod extends Entitet {
 	public void setImeProizvoda(String imeProizvoda) {
 		this.imeProizvoda = imeProizvoda;
 	}
+
+    public List<StavkaRacuna> getRacuni() {
+        return racuni;
+    }
+
+    public void setRacuni(List<StavkaRacuna> racuni) {
+        this.racuni = racuni;
+    }
 
 	public BigDecimal getCijena() {
 		return cijena;
@@ -38,7 +51,7 @@ public class Proizvod extends Entitet {
 
 	@Override
 	public String toString() {			
-		return imeProizvoda +" " + cijena+" kn || "+ cijena.divide(BigDecimal.valueOf(7.53450), 2, RoundingMode.HALF_DOWN)+" eur";
+		return imeProizvoda +" " +cijena.setScale(2, RoundingMode.DOWN) +" kn || "+ cijena.divide(BigDecimal.valueOf(7.53450), 2, RoundingMode.HALF_DOWN)+" eur";
 	}
 	
 
