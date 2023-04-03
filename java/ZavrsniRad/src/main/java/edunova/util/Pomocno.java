@@ -4,6 +4,8 @@
  */
 package edunova.util;
 
+import edunova.controller.ObradaRacun;
+import edunova.model.Racun;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -12,9 +14,12 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Pomocno {
 
+    
+
     public static int brojIzmedju(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
 
     }
-
+    
+   
 }

@@ -19,10 +19,8 @@ import java.util.logging.Logger;
 public class Start {
 
     public static void main(String[] args) {
-       
+
 //        new PocetniInsert();
-
-
 //        ObradaBlagajnik ob = new ObradaBlagajnik();
 //        
 //        Blagajnik bl = new Blagajnik();
@@ -38,7 +36,12 @@ public class Start {
 //            System.out.println(b.getIme());
 //        }
         new SplashScreen().setVisible(true);
-
-       
+//        String a = "614757";
+//        String b = "2020-01-26 11:22:39.206";
+//        String c = "779.08";
+//        String d = "Dominick Strosin";
+//
+//        String test = String.format("|%-10s|", a);
+//        System.out.println(test);
     }
 }

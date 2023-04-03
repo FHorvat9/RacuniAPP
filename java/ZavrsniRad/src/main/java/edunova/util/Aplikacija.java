@@ -8,8 +8,11 @@ package edunova.util;
  *
  * @author Feecho
  */
+
 public class Aplikacija {
     public static final String NAZIV_APP="Edunova aplikacija"; 
     public static String OPERATER="";
+    
+    
     
 }

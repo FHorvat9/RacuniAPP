@@ -6,71 +6,71 @@ import java.math.BigDecimal;
 
 @Entity
 public class StavkaRacuna extends Entitet {
-        
-        @ManyToOne
-	private Proizvod proizvod;
-	private int kolicina;
-	private BigDecimal cijenaProizvoda;
-	private BigDecimal ukupnaCijenaProizvoda;
-	private int brojRacuna;
 
-	public StavkaRacuna() {
-		super();
-	}
+    @ManyToOne
+    private Proizvod proizvod;
+    private int kolicina;
+    private BigDecimal cijenaProizvoda;
+    private BigDecimal ukupnaCijenaProizvoda;
+    private int brojRacuna;
 
-	public StavkaRacuna(int sifra, Proizvod proizvod, int kolicina, BigDecimal cijenaProizvoda,
-			BigDecimal ukupnaCijenaProizvoda, int brojRacuna) {
-		super(sifra);
-		this.proizvod = proizvod;
-		this.kolicina = kolicina;
-		this.cijenaProizvoda = cijenaProizvoda;
-		this.ukupnaCijenaProizvoda = ukupnaCijenaProizvoda;
-		this.brojRacuna = brojRacuna;
-	}
+    public StavkaRacuna() {
+        super();
+    }
 
-	public Proizvod getProizvod() {
-		return proizvod;
-	}
+    public StavkaRacuna(int sifra, Proizvod proizvod, int kolicina, BigDecimal cijenaProizvoda,
+            BigDecimal ukupnaCijenaProizvoda, int brojRacuna) {
+        super(sifra);
+        this.proizvod = proizvod;
+        this.kolicina = kolicina;
+        this.cijenaProizvoda = cijenaProizvoda;
+        this.ukupnaCijenaProizvoda = ukupnaCijenaProizvoda;
+        this.brojRacuna = brojRacuna;
+    }
 
-	public void setProizvod(Proizvod proizvod) {
-		this.proizvod = proizvod;
-	}
+    public Proizvod getProizvod() {
+        return proizvod;
+    }
 
-	public int getKolicina() {
-		return kolicina;
-	}
+    public void setProizvod(Proizvod proizvod) {
+        this.proizvod = proizvod;
+    }
 
-	public void setKolicina(int kolicina) {
-		this.kolicina = kolicina;
-	}
+    public int getKolicina() {
+        return kolicina;
+    }
 
-	public BigDecimal getCijenaProizvoda() {
-		return cijenaProizvoda;
-	}
+    public void setKolicina(int kolicina) {
+        this.kolicina = kolicina;
+    }
 
-	public void setCijenaProizvoda(BigDecimal cijenaProizvoda) {
-		this.cijenaProizvoda = cijenaProizvoda;
-	}
+    public BigDecimal getCijenaProizvoda() {
+        return cijenaProizvoda;
+    }
 
-	public BigDecimal getUkupnaCijenaProizvoda() {
-		return ukupnaCijenaProizvoda;
-	}
+    public void setCijenaProizvoda(BigDecimal cijenaProizvoda) {
+        this.cijenaProizvoda = cijenaProizvoda;
+    }
 
-	public void setUkupnaCijenaProizvoda(BigDecimal ukupnaCijenaProizvoda) {
-		this.ukupnaCijenaProizvoda = ukupnaCijenaProizvoda;
-	}
+    public BigDecimal getUkupnaCijenaProizvoda() {
+        return ukupnaCijenaProizvoda;
+    }
 
-	public int getBrojRacuna() {
-		return brojRacuna;
-	}
+    public void setUkupnaCijenaProizvoda(BigDecimal ukupnaCijenaProizvoda) {
+        this.ukupnaCijenaProizvoda = ukupnaCijenaProizvoda;
+    }
 
-	public void setBrojRacuna(int brojRacuna) {
-		this.brojRacuna = brojRacuna;
-	}
+    public int getBrojRacuna() {
+        return brojRacuna;
+    }
 
-	@Override
-	public String toString() {
-		return  brojRacuna+" "+proizvod + " " + kolicina + " " + ukupnaCijenaProizvoda + "kn ";
-	}
+    public void setBrojRacuna(int brojRacuna) {
+        this.brojRacuna = brojRacuna;
+    }
+
+    @Override
+    public String toString() {
+        return proizvod + " " + kolicina + " " + ukupnaCijenaProizvoda + "kn ";
+    }
 
 }

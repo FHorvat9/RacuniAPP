@@ -21,18 +21,18 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         initComponents();
         setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         new Vrijeme().start();
-
+        
     }
-
+    
     private class Vrijeme extends Thread {
-
+        
         private SimpleDateFormat df;
-
+        
         public Vrijeme() {
             df = new SimpleDateFormat(
                     "dd.MM.YYYY. hh:mm:ss");
         }
-
+        
         @Override
         public void run() {
             while (true) {
@@ -42,11 +42,11 @@ public class ProzorIzbornik extends javax.swing.JFrame {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-
+                    
                 }
             }
         }
-
+        
     }
 
     /**
@@ -66,6 +66,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +103,14 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setText("Racuni");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -124,21 +133,26 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
+        
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-
+        
         new ProzorProizvodi().setVisible(true);
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-
+        
         new ProzorBlagajnik().setVisible(true);
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        new ProzorRacun().setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,6 +165,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblVrijeme;
     // End of variables declaration//GEN-END:variables

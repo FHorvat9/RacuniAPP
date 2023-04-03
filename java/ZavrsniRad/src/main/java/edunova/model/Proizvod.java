@@ -51,7 +51,7 @@ public class Proizvod extends Entitet {
 
 	@Override
 	public String toString() {			
-		return imeProizvoda +" " +cijena.setScale(2, RoundingMode.DOWN) +" kn || "+ cijena.divide(BigDecimal.valueOf(7.53450), 2, RoundingMode.HALF_DOWN)+" eur";
+		return imeProizvoda +" " +cijena.setScale(2, RoundingMode.DOWN) +" kn";
 	}
 	
 
