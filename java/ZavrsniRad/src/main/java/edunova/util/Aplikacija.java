@@ -4,6 +4,8 @@
  */
 package edunova.util;
 
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Feecho
@@ -12,6 +14,7 @@ package edunova.util;
 public class Aplikacija {
     public static final String NAZIV_APP="Edunova aplikacija"; 
     public static String OPERATER="";
+    public static SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");
     
     
     

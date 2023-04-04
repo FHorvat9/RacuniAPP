@@ -4,9 +4,11 @@
  */
 package edunova.controller;
 
+import edunova.model.Blagajnik;
 import edunova.model.Entitet;
 import edunova.model.Racun;
 import edunova.util.EdunovaException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,20 +23,43 @@ public class ObradaRacun extends Obrada<Racun> {
 
     }
 
- 
+    public List<Racun> read(String uvjet, int broj) {
+
+        switch (broj) {
+            case 0:
+                uvjet = uvjet.trim();
+                uvjet = "%" + uvjet + "%";
+//                        
+                return session.createNativeQuery("SELECT DISTINCT racun.* from Racun INNER JOIN blagajnik ON "
+                        + "racun.blagajnik_sifra = blagajnik.sifra "
+                        + "where concat(ime,' ',prezime,' ',ime) like :uvjet ", Racun.class).setParameter("uvjet", uvjet).list();
+
+            case 1:
+                uvjet = uvjet.trim();
+                uvjet =  uvjet + "%";
+
+                return session.createQuery("from Racun where cast(brojRacuna as text) like :uvjet", Racun.class).setParameter("uvjet", uvjet).list();
+             case 2:
+                uvjet = uvjet.trim();
+                uvjet =  uvjet + "%";
+
+                return session.createQuery("from Racun where cast(datum as text) like :uvjet", Racun.class).setParameter("uvjet", uvjet).list();
+        }
+        return null;
+    }
 
     @Override
-public void kontrolaUnos() throws EdunovaException {
+    public void kontrolaUnos() throws EdunovaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-public void kontrolaPromjena() throws EdunovaException {
+    public void kontrolaPromjena() throws EdunovaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-public void kontrolaBrisanje() throws EdunovaException {
+    public void kontrolaBrisanje() throws EdunovaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

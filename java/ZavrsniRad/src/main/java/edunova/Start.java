@@ -8,6 +8,7 @@ import edunova.model.Blagajnik;
 import edunova.util.EdunovaException;
 import edunova.util.OibUtil;
 import edunova.util.PocetniInsert;
+import edunova.view.ProzorRacun;
 import edunova.view.SplashScreen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,10 @@ public class Start {
 
     public static void main(String[] args) {
 
-//        new PocetniInsert();
+//                new PocetniInsert();
+//        new SplashScreen().setVisible(true);
+new ProzorRacun().setVisible(true);
+
 //        ObradaBlagajnik ob = new ObradaBlagajnik();
 //        
 //        Blagajnik bl = new Blagajnik();
@@ -35,7 +39,6 @@ public class Start {
 //        for (Blagajnik b : ob.read()) {
 //            System.out.println(b.getIme());
 //        }
-        new SplashScreen().setVisible(true);
 //        String a = "614757";
 //        String b = "2020-01-26 11:22:39.206";
 //        String c = "779.08";

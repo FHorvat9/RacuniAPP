@@ -1,6 +1,9 @@
 package edunova.model;
 
+import edunova.util.Aplikacija;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
@@ -11,12 +14,15 @@ import java.util.List;
 
 @Entity
 public class Racun extends Entitet {
-
+    
+    
     @ManyToOne
+    
     private Blagajnik blagajnik;
 
     private int brojRacuna;
     private Date datum;
+    
     @ManyToMany
     private List<StavkaRacuna> stavkeRacuna;
     private BigDecimal zaPlatiti;
@@ -24,14 +30,15 @@ public class Racun extends Entitet {
     @Override
     public String toString() {
 
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy. - HH:mm:ss");
+        
 //        return String.format("|%-6s||%-6s||%-22s||%-22s||", brojRacuna,zaPlatiti,df.format(datum),blagajnik.toString());
-        return brojRacuna + " " + blagajnik + " " + df.format(datum) + " " + zaPlatiti;
+        return String.format("%-6s || %-21s || %s",brojRacuna , Aplikacija.df.format(datum),blagajnik) ;
     }
 
     public Racun(int sifra, Blagajnik blagajnik, int brojRacuna, Date datum, List<StavkaRacuna> stavkeRacuna,
             BigDecimal zaPlatiti) {
         super(sifra);
+        
         this.blagajnik = blagajnik;
         this.brojRacuna = brojRacuna;
         this.datum = datum;

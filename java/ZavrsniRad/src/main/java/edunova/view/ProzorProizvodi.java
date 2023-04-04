@@ -11,6 +11,7 @@ import edunova.model.Proizvod;
 import edunova.util.Aplikacija;
 import edunova.util.EdunovaException;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -123,6 +124,12 @@ public class ProzorProizvodi extends javax.swing.JFrame {
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
+            }
+        });
+
+        txtTrazilica.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTrazilicaKeyPressed(evt);
             }
         });
 
@@ -267,6 +274,14 @@ public class ProzorProizvodi extends javax.swing.JFrame {
         ucitaj();
 
     }//GEN-LAST:event_btnTraziActionPerformed
+
+    private void txtTrazilicaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTrazilicaKeyPressed
+      if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ucitaj();
+        }
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_txtTrazilicaKeyPressed
     
     private void napuniModel() {
         var p = obrada.getEntitet();
