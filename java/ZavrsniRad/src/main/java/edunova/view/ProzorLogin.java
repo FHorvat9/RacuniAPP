@@ -4,6 +4,7 @@
  */
 package edunova.view;
 
+import edunova.controller.ObradaBlagajnik;
 import edunova.controller.ObradaOperater;
 import edunova.model.Operater;
 import edunova.util.Aplikacija;
@@ -16,6 +17,7 @@ import java.awt.event.KeyEvent;
 public class ProzorLogin extends javax.swing.JFrame {
 
     private ObradaOperater obrada;
+   
 
     /**
      * Creates new form ProzorLogin
@@ -45,6 +47,8 @@ public class ProzorLogin extends javax.swing.JFrame {
         }
         
         Aplikacija.OPERATER=o.getUsername();
+        
+        
         new ProzorIzbornik().setVisible(true);
         dispose();
 

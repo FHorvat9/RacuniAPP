@@ -23,6 +23,8 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
     public List<Blagajnik> read() {
         return session.createQuery("from Blagajnik", Blagajnik.class).list();
     }
+    
+   
 
     @Override
     public void kontrolaUnos() throws EdunovaException {

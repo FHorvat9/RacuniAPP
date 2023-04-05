@@ -6,14 +6,27 @@ package edunova.view;
 
 import edunova.controller.ObradaProizvod;
 import edunova.controller.ObradaRacun;
+import edunova.model.Blagajnik;
+import edunova.model.Entitet;
 import edunova.model.Proizvod;
 import edunova.model.Racun;
 import edunova.model.StavkaRacuna;
 import edunova.util.Aplikacija;
+import edunova.util.EdunovaException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+import org.hibernate.Session;
 
 /**
  *
@@ -29,14 +42,20 @@ public class ProzorRacun extends javax.swing.JFrame {
 
     public ProzorRacun() {
         initComponents();
+
         buttonGroup1.add(btnPoBlagajniku);
         buttonGroup1.add(btnPoBrRacuna);
+        spnKolicina.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 
         btnPoBlagajniku.setSelected(true);
+        
 
         obrada = new ObradaRacun();
         obradaProizvod = new ObradaProizvod();
         ucitaj();
+        ucitajProizvode();
+        cmbProizvodi.setSelectedIndex(1);
+        
     }
 
     /**
@@ -66,8 +85,15 @@ public class ProzorRacun extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnNoviRacun = new javax.swing.JButton();
+        btnDodajStavku = new javax.swing.JButton();
+        cmbProizvodi = new javax.swing.JComboBox<>();
+        spnKolicina = new javax.swing.JSpinner();
+        btnSpremiStavke = new javax.swing.JButton();
+        btnObrisiRacun = new javax.swing.JButton();
+        btnObrisiStavku = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lstPodaci.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstPodaci.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -123,7 +149,42 @@ public class ProzorRacun extends javax.swing.JFrame {
 
         jLabel5.setText("Datum unosa");
 
-        jLabel6.setText("Stavke Racuna");
+        jLabel6.setText("Trenutne Stavke racuna");
+
+        btnNoviRacun.setText("Novi racun");
+        btnNoviRacun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoviRacunActionPerformed(evt);
+            }
+        });
+
+        btnDodajStavku.setText("Dodaj Stavku");
+        btnDodajStavku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajStavkuActionPerformed(evt);
+            }
+        });
+
+        btnSpremiStavke.setText("Spremi promjene");
+        btnSpremiStavke.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSpremiStavkeActionPerformed(evt);
+            }
+        });
+
+        btnObrisiRacun.setText("Obrisi racun");
+        btnObrisiRacun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiRacunActionPerformed(evt);
+            }
+        });
+
+        btnObrisiStavku.setText("Obrisi stavku");
+        btnObrisiStavku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiStavkuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,12 +210,31 @@ public class ProzorRacun extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addContainerGap(42, Short.MAX_VALUE))
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnNoviRacun, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnObrisiRacun, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSpremiStavke, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(295, 295, 295))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbProizvodi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(121, 121, 121))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnDodajStavku)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnObrisiStavku)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +244,18 @@ public class ProzorRacun extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbProizvodi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spnKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDodajStavku)
+                            .addComponent(btnObrisiStavku))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSpremiStavke)
+                        .addGap(84, 84, 84))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTrazilica)
@@ -190,9 +281,12 @@ public class ProzorRacun extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 265, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))))
-                .addContainerGap())
+                                .addGap(18, 18, 18)
+                                .addComponent(btnNoviRacun)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnObrisiRacun)
+                                .addContainerGap())
+                            .addComponent(jScrollPane1)))))
         );
 
         pack();
@@ -223,14 +317,95 @@ public class ProzorRacun extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTrazilicaActionPerformed
 
     private void btnPoBlagajnikuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoBlagajnikuActionPerformed
-        txtTrazilica.setVisible(true);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPoBlagajnikuActionPerformed
 
     private void btnPoBrRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoBrRacunaActionPerformed
-        txtTrazilica.setVisible(true);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPoBrRacunaActionPerformed
+
+    private void btnNoviRacunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoviRacunActionPerformed
+
+        obrada.setEntitet(new Racun());
+        napuniModel(false);
+        try {
+            obrada.create();
+            ucitaj();
+            lstPodaci.setSelectedIndex((lstPodaci.getModel().getSize()) - 1);
+        } catch (EdunovaException e) {
+            JOptionPane.showMessageDialog(getRootPane(), e.getPoruka());
+        }
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnNoviRacunActionPerformed
+
+    private void btnDodajStavkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajStavkuActionPerformed
+        if (lstStavkeNaRacunu.getModel() == null
+                || !(lstStavkeNaRacunu.getModel() instanceof DefaultListModel<StavkaRacuna>)) {
+            lstStavkeNaRacunu.setModel(new DefaultListModel<StavkaRacuna>());
+        }
+        DefaultListModel<StavkaRacuna> m
+                = (DefaultListModel<StavkaRacuna>) lstStavkeNaRacunu.getModel();
+
+        DefaultListModel<StavkaRacuna> stavke
+                = (DefaultListModel<StavkaRacuna>) lstStavkeNaRacunu.getModel();
+        Proizvod p = (Proizvod) cmbProizvodi.getSelectedItem();
+        StavkaRacuna sr = new StavkaRacuna();
+        sr.setProizvod(p);
+        sr.setKolicina((int) spnKolicina.getValue());
+        sr.setCijenaProizvoda(p.getCijena());
+        sr.setUkupnaCijenaProizvoda(p.getCijena().multiply(BigDecimal.valueOf(sr.getKolicina())));
+        sr.setBrojRacuna(123);
+        stavke.addElement(sr);
+        lstStavkeNaRacunu.repaint();
+    }//GEN-LAST:event_btnDodajStavkuActionPerformed
+
+    private void btnSpremiStavkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpremiStavkeActionPerformed
+        if (lstPodaci.getSelectedValue() == null) {
+            return;
+        }
+        obrada.getEntitet().getStavkeRacuna().clear();
+        napuniModel(true);
+        try {
+            obrada.update();
+            ucitaj();
+        } catch (EdunovaException ex) {
+            JOptionPane.showMessageDialog(getParent(), ex.getPoruka());
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSpremiStavkeActionPerformed
+
+    private void btnObrisiRacunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiRacunActionPerformed
+        if (lstPodaci.getSelectedValue() == null) {
+            return;
+        }
+        obrada.getEntitet().getStavkeRacuna().clear();
+        try {
+            obrada.delete();
+            ucitaj();
+        } catch (EdunovaException ex) {
+            JOptionPane.showMessageDialog(getParent(), ex.getPoruka());
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnObrisiRacunActionPerformed
+
+    private void btnObrisiStavkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiStavkuActionPerformed
+        if (lstStavkeNaRacunu.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(getRootPane(),
+                    "Prvo odaberite stavku na racunu");
+            return;
+        }
+
+        DefaultListModel<StavkaRacuna> m
+                = (DefaultListModel<StavkaRacuna>) lstStavkeNaRacunu.getModel();
+
+        m.removeElement(lstStavkeNaRacunu.getSelectedValue());
+
+        lstStavkeNaRacunu.repaint();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnObrisiStavkuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,7 +439,12 @@ public class ProzorRacun extends javax.swing.JFrame {
 
     private void napuniView() {
         var e = obrada.getEntitet();
-        txtBlagajnik.setText(e.getBlagajnik().toString());
+        try {
+            txtBlagajnik.setText(e.getBlagajnik().toString());
+        } catch (Exception ex) {
+            txtBlagajnik.setText("null");
+        }
+
         txtZaPlatiti.setText(e.getZaPlatiti().toString());
         txtDatum.setText(Aplikacija.df.format(e.getDatum()));
         txtBrRacuna.setText(String.valueOf(e.getBrojRacuna()));
@@ -279,12 +459,26 @@ public class ProzorRacun extends javax.swing.JFrame {
 
     }
 
+    private void ucitajProizvode() {
+        DefaultComboBoxModel<Proizvod> m
+                = new DefaultComboBoxModel<>();
+        m.addAll(new ObradaProizvod().read());
+        cmbProizvodi.setModel(m);
+        cmbProizvodi.repaint();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDodajStavku;
+    private javax.swing.JButton btnNoviRacun;
+    private javax.swing.JButton btnObrisiRacun;
+    private javax.swing.JButton btnObrisiStavku;
     private javax.swing.JRadioButton btnPoBlagajniku;
     private javax.swing.JRadioButton btnPoBrRacuna;
+    private javax.swing.JButton btnSpremiStavke;
     private javax.swing.JButton btnTrazilica;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<Proizvod> cmbProizvodi;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -294,10 +488,40 @@ public class ProzorRacun extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<Racun> lstPodaci;
     private javax.swing.JList<StavkaRacuna> lstStavkeNaRacunu;
+    private javax.swing.JSpinner spnKolicina;
     private javax.swing.JTextField txtBlagajnik;
     private javax.swing.JTextField txtBrRacuna;
     private javax.swing.JTextField txtDatum;
     private javax.swing.JTextField txtTrazilica;
     private javax.swing.JTextField txtZaPlatiti;
     // End of variables declaration//GEN-END:variables
+
+    private void napuniModel(boolean PovuciStavke) {
+        var e = obrada.getEntitet();
+        e.setBlagajnik(null);
+        e.setBrojRacuna(123456);
+        e.setDatum(new Date());
+        BigDecimal zaPlatit = new BigDecimal(BigInteger.ZERO);
+        e.setZaPlatiti(zaPlatit);
+
+        if (PovuciStavke) {
+
+            List<StavkaRacuna> stavke = new ArrayList<>();
+            try {
+                DefaultListModel<StavkaRacuna> m = (DefaultListModel<StavkaRacuna>) lstStavkeNaRacunu.getModel();
+                for (int i = 0; i < m.getSize(); i++) {
+                    stavke.add(m.getElementAt(i));
+                }
+            } catch (Exception ex) {
+
+            }
+            e.setStavkeRacuna(stavke);
+
+            for (StavkaRacuna stavka : stavke) {
+                zaPlatit.add(stavka.getUkupnaCijenaProizvoda());
+            }
+            e.setZaPlatiti(zaPlatit);
+        }
+    }
+
 }

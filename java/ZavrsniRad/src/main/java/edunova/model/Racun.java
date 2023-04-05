@@ -1,6 +1,7 @@
 package edunova.model;
 
 import edunova.util.Aplikacija;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -23,7 +24,7 @@ public class Racun extends Entitet {
     private int brojRacuna;
     private Date datum;
     
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.ALL)
     private List<StavkaRacuna> stavkeRacuna;
     private BigDecimal zaPlatiti;
 

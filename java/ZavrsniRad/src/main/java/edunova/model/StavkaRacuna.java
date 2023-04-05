@@ -1,5 +1,6 @@
 package edunova.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
 @Entity
 public class StavkaRacuna extends Entitet {
 
-    @ManyToOne
+    @ManyToOne 
     private Proizvod proizvod;
     private int kolicina;
     private BigDecimal cijenaProizvoda;
@@ -18,9 +19,9 @@ public class StavkaRacuna extends Entitet {
         super();
     }
 
-    public StavkaRacuna(int sifra, Proizvod proizvod, int kolicina, BigDecimal cijenaProizvoda,
+    public StavkaRacuna(Proizvod proizvod, int kolicina, BigDecimal cijenaProizvoda,
             BigDecimal ukupnaCijenaProizvoda, int brojRacuna) {
-        super(sifra);
+        super();
         this.proizvod = proizvod;
         this.kolicina = kolicina;
         this.cijenaProizvoda = cijenaProizvoda;

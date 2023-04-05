@@ -64,4 +64,17 @@ public class ObradaOperater extends Obrada<Operater> {
     public void kontrolaBrisanje() throws EdunovaException {
     }
 
+    public void unosOperatera(String username, String password) {
+        Operater o = new Operater();
+        o.setUsername(username);
+        o.setLozinka(BCrypt.hashpw(password, BCrypt.gensalt()).toCharArray());
+
+        entitet = o;
+        try {
+            create();
+        } catch (EdunovaException ex) {
+
+        }
+    }
+
 }

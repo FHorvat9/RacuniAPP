@@ -39,28 +39,21 @@ public class ObradaRacun extends Obrada<Racun> {
                 uvjet =  uvjet + "%";
 
                 return session.createQuery("from Racun where cast(brojRacuna as text) like :uvjet", Racun.class).setParameter("uvjet", uvjet).list();
-             case 2:
-                uvjet = uvjet.trim();
-                uvjet =  uvjet + "%";
-
-                return session.createQuery("from Racun where cast(datum as text) like :uvjet", Racun.class).setParameter("uvjet", uvjet).list();
+        
         }
         return null;
     }
 
     @Override
     public void kontrolaUnos() throws EdunovaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void kontrolaPromjena() throws EdunovaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void kontrolaBrisanje() throws EdunovaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

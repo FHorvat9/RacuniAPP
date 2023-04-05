@@ -4,6 +4,7 @@
 package edunova;
 
 import edunova.controller.ObradaBlagajnik;
+import edunova.controller.ObradaOperater;
 import edunova.model.Blagajnik;
 import edunova.util.EdunovaException;
 import edunova.util.OibUtil;
@@ -22,8 +23,12 @@ public class Start {
     public static void main(String[] args) {
 
 //                new PocetniInsert();
-//        new SplashScreen().setVisible(true);
-new ProzorRacun().setVisible(true);
+        new SplashScreen().setVisible(true);
+
+
+//ObradaOperater op= new ObradaOperater();
+//op.unosOperatera("Karan Gorczany", "123");
+
 
 //        ObradaBlagajnik ob = new ObradaBlagajnik();
 //        

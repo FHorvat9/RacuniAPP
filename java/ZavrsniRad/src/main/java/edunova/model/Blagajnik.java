@@ -10,6 +10,7 @@ public class Blagajnik extends Entitet {
     private String ime;
     private String prezime;
     private String oib;
+  
     
     @OneToMany(mappedBy = "blagajnik")
     private List<Racun> racuni;
@@ -48,8 +49,8 @@ public class Blagajnik extends Entitet {
         this.prezime = prezime;
     }
 
-    public Blagajnik(int sifra, String ime, String prezime) {
-        super(sifra);
+    public Blagajnik(String ime, String prezime) {
+        super();
         this.ime = ime;
         this.prezime = prezime;
     }

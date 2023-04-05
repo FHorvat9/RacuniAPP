@@ -36,6 +36,7 @@ public class SplashScreen extends javax.swing.JFrame {
                 ObradaOperater op = new ObradaOperater();
                 if (op.read().isEmpty()) {
                     op.unosAdminOperatera();
+                    
                 }
                 new ProzorLogin().setVisible(true);
                 dispose();
