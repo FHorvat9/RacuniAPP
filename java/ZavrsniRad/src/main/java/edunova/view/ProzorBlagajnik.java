@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -314,13 +315,13 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
         var p = obrada.getEntitet();
 
         try {
-            p.setIme(txtIme.getText());
+            p.setIme(txtIme.getText().trim());
         } catch (Exception e) {
             p.setIme("");
         }
 
         try {
-            p.setPrezime(txtPrezime.getText());
+            p.setPrezime(txtPrezime.getText().trim());
 
         } catch (Exception e) {
             p.setPrezime("");
@@ -330,6 +331,9 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
         } catch (Exception e) {
             p.setOib(OibUtil.generirajOib());
         }
+        
+        p.setUsername(p.getIme()+" "+p.getPrezime());
+        p.setLozinka(BCrypt.hashpw("123", BCrypt.gensalt()).toCharArray());
 
     }
 }

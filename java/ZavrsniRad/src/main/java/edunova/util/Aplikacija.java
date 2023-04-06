@@ -5,7 +5,7 @@
 package edunova.util;
 
 import edunova.model.Blagajnik;
-import edunova.model.Operater;
+
 
 import java.text.SimpleDateFormat;
 

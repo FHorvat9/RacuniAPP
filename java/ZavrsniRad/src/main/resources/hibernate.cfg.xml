@@ -21,7 +21,7 @@
         <mapping class="edunova.model.Proizvod" />
         <mapping class="edunova.model.Racun" />
         <mapping class="edunova.model.StavkaRacuna" />
-        <mapping class="edunova.model.Operater"/>
+        
     
     </session-factory>
 </hibernate-configuration>

@@ -8,8 +8,10 @@ import edunova.model.Blagajnik;
 import edunova.model.Entitet;
 import edunova.model.Racun;
 import edunova.util.EdunovaException;
+import edunova.util.Pomocno;
 import java.util.Collection;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,16 +38,17 @@ public class ObradaRacun extends Obrada<Racun> {
 
             case 1:
                 uvjet = uvjet.trim();
-                uvjet =  uvjet + "%";
+                uvjet = uvjet + "%";
 
                 return session.createQuery("from Racun where cast(brojRacuna as text) like :uvjet", Racun.class).setParameter("uvjet", uvjet).list();
-        
+
         }
         return null;
     }
 
     @Override
     public void kontrolaUnos() throws EdunovaException {
+        provjeraBrojRacuna();
     }
 
     @Override
@@ -54,6 +57,24 @@ public class ObradaRacun extends Obrada<Racun> {
 
     @Override
     public void kontrolaBrisanje() throws EdunovaException {
+    }
+
+    private void provjeraBrojRacuna() {
+        List<Racun> racuni = null;
+        try {
+            racuni = session.createQuery("from Racun "
+                    + " where racun.BrojRacuna=:BrojRacuna ",
+                    Racun.class)
+                    .setParameter("BrojRacuna", entitet.getBrojRacuna())
+                    .list();
+        } catch (Exception e) {
+        }
+        if (racuni != null && !racuni.isEmpty()) {
+
+            entitet.setBrojRacuna(Pomocno.brojIzmedju(100000, 999999));
+
+            provjeraBrojRacuna();
+        }
     }
 
 }

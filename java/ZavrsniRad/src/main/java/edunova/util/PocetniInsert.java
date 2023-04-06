@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.hibernate.Session;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -41,6 +42,7 @@ public class PocetniInsert {
         stavke = new ArrayList<>();
         racuni = new ArrayList<>();
 
+        kreirajLoginBlagajnika();
         kreirajBlagajnike();
         kreirajProizvode();
         kreirajRacune();
@@ -56,6 +58,8 @@ public class PocetniInsert {
             b.setIme(faker.name().firstName());
             b.setPrezime(faker.name().lastName());
             b.setOib(OibUtil.generirajOib());
+            b.setUsername(b.getIme() + " " + b.getPrezime());
+            b.setLozinka(BCrypt.hashpw("123", BCrypt.gensalt()).toCharArray());
             s.persist(b);
             blagajnici.add(b);
         }
@@ -77,18 +81,18 @@ public class PocetniInsert {
     private void kreirajRacune() {
         Racun r;
         int indexBlagajnik;
-        for(int i =0; i<BROJ_RACUNA;i++){
+        for (int i = 0; i < BROJ_RACUNA; i++) {
             r = new Racun();
-            indexBlagajnik = Pomocno.brojIzmedju(0, BROJ_BLAGAJNIKA-1);
+            indexBlagajnik = Pomocno.brojIzmedju(0, BROJ_BLAGAJNIKA - 1);
             r.setBlagajnik(blagajnici.get(indexBlagajnik));
             r.setDatum(faker.date().birthday(1, 10));
             r.setBrojRacuna(faker.number().numberBetween(100000, 1000000));
             r.setStavkeRacuna(kreirajStavke(r.getBrojRacuna()));
-            
+
             BigDecimal zaPlatit = BigDecimal.valueOf(0);
-		for (StavkaRacuna stavka : r.getStavkeRacuna()) {
-			zaPlatit = zaPlatit.add(stavka.getUkupnaCijenaProizvoda());
-		}
+            for (StavkaRacuna stavka : r.getStavkeRacuna()) {
+                zaPlatit = zaPlatit.add(stavka.getUkupnaCijenaProizvoda());
+            }
             r.setZaPlatiti(zaPlatit);
             s.persist(r);
         }
@@ -97,9 +101,9 @@ public class PocetniInsert {
     private List<StavkaRacuna> kreirajStavke(int brojRacuna) {
         List<StavkaRacuna> tempStavke = new ArrayList<>();
         StavkaRacuna stavka;
-        for(int i=0;i<Pomocno.brojIzmedju(1, BROJ_STAVKI);i++){
-            stavka= new StavkaRacuna();
-            stavka.setProizvod(proizvodi.get(Pomocno.brojIzmedju(0, BROJ_PROIZVODA-1)));
+        for (int i = 0; i < Pomocno.brojIzmedju(1, BROJ_STAVKI); i++) {
+            stavka = new StavkaRacuna();
+            stavka.setProizvod(proizvodi.get(Pomocno.brojIzmedju(0, BROJ_PROIZVODA - 1)));
             stavka.setBrojRacuna(brojRacuna);
             stavka.setKolicina(faker.number().numberBetween(0, 10));
             stavka.setCijenaProizvoda(stavka.getProizvod().getCijena());
@@ -107,9 +111,20 @@ public class PocetniInsert {
             stavke.add(stavka);
             tempStavke.add(stavka);
             s.persist(stavka);
-            
+
         }
         return tempStavke;
+    }
+
+    private void kreirajLoginBlagajnika() {
+        Blagajnik b = new Blagajnik();
+        b.setIme("Filip");
+        b.setPrezime("Horvat");
+        b.setOib(OibUtil.generirajOib());
+        b.setUsername(b.getIme() + " " + b.getPrezime());
+        b.setLozinka(BCrypt.hashpw("123", BCrypt.gensalt()).toCharArray());
+        s.persist(b);
+        blagajnici.add(b);
     }
 
 }

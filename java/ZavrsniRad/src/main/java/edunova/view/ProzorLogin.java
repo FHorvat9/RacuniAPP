@@ -5,8 +5,9 @@
 package edunova.view;
 
 import edunova.controller.ObradaBlagajnik;
-import edunova.controller.ObradaOperater;
-import edunova.model.Operater;
+import edunova.model.Blagajnik;
+
+
 import edunova.util.Aplikacija;
 import java.awt.event.KeyEvent;
 
@@ -16,7 +17,7 @@ import java.awt.event.KeyEvent;
  */
 public class ProzorLogin extends javax.swing.JFrame {
 
-    private ObradaOperater obrada;
+    private ObradaBlagajnik obrada;
    
 
     /**
@@ -24,7 +25,7 @@ public class ProzorLogin extends javax.swing.JFrame {
      */
     public ProzorLogin() {
         initComponents();
-        obrada = new ObradaOperater();
+        obrada = new ObradaBlagajnik();
 
         setTitle(Aplikacija.NAZIV_APP + " login");
     }
@@ -40,13 +41,14 @@ public class ProzorLogin extends javax.swing.JFrame {
             return;
         }
 
-        Operater o = obrada.Autoriziraj(txtUsername.getText(), pswLozinka.getPassword());
+        Blagajnik o = obrada.Autoriziraj(txtUsername.getText(), pswLozinka.getPassword());
         if (o == null) {
             lblPoruka.setText("Neispravna kombinacija email i lozinka");
             return;
         }
         
         Aplikacija.OPERATER=o.getUsername();
+        Aplikacija.ULOGIRANIBLAGAJNIK=o;
         
         
         new ProzorIzbornik().setVisible(true);
@@ -74,7 +76,7 @@ public class ProzorLogin extends javax.swing.JFrame {
 
         jLabel1.setText("Username");
 
-        txtUsername.setText("Admin");
+        txtUsername.setText("Filip Horvat");
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsernameActionPerformed(evt);
@@ -88,7 +90,12 @@ public class ProzorLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Lozinka");
 
-        pswLozinka.setText("edunova");
+        pswLozinka.setText("123");
+        pswLozinka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pswLozinkaActionPerformed(evt);
+            }
+        });
         pswLozinka.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 pswLozinkaKeyPressed(evt);
@@ -147,7 +154,7 @@ public class ProzorLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnAutorizitajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutorizitajActionPerformed
-        autoriziraj();
+          autoriziraj();
     }//GEN-LAST:event_btnAutorizitajActionPerformed
 
     private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
@@ -186,6 +193,10 @@ public class ProzorLogin extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_pswLozinkaKeyPressed
+
+    private void pswLozinkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswLozinkaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pswLozinkaActionPerformed
 
     /**
      * @param args the command line arguments

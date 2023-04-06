@@ -13,6 +13,7 @@ import edunova.model.Racun;
 import edunova.model.StavkaRacuna;
 import edunova.util.Aplikacija;
 import edunova.util.EdunovaException;
+import edunova.util.Pomocno;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -48,14 +49,13 @@ public class ProzorRacun extends javax.swing.JFrame {
         spnKolicina.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 
         btnPoBlagajniku.setSelected(true);
-        
 
         obrada = new ObradaRacun();
         obradaProizvod = new ObradaProizvod();
         ucitaj();
         ucitajProizvode();
         cmbProizvodi.setSelectedIndex(1);
-        
+
     }
 
     /**
@@ -285,8 +285,9 @@ public class ProzorRacun extends javax.swing.JFrame {
                                 .addComponent(btnNoviRacun)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnObrisiRacun)
-                                .addContainerGap())
-                            .addComponent(jScrollPane1)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
         );
 
         pack();
@@ -366,11 +367,13 @@ public class ProzorRacun extends javax.swing.JFrame {
         if (lstPodaci.getSelectedValue() == null) {
             return;
         }
+        int index = lstPodaci.getSelectedIndex();
         obrada.getEntitet().getStavkeRacuna().clear();
         napuniModel(true);
         try {
             obrada.update();
             ucitaj();
+            lstPodaci.setSelectedIndex(index);
         } catch (EdunovaException ex) {
             JOptionPane.showMessageDialog(getParent(), ex.getPoruka());
         }
@@ -498,11 +501,15 @@ public class ProzorRacun extends javax.swing.JFrame {
 
     private void napuniModel(boolean PovuciStavke) {
         var e = obrada.getEntitet();
-        e.setBlagajnik(null);
-        e.setBrojRacuna(123456);
+        e.setBlagajnik(Aplikacija.ULOGIRANIBLAGAJNIK);
+
         e.setDatum(new Date());
-        BigDecimal zaPlatit = new BigDecimal(BigInteger.ZERO);
+        BigDecimal zaPlatit = new BigDecimal(BigInteger.ONE);
         e.setZaPlatiti(zaPlatit);
+
+        if (!PovuciStavke) {
+            e.setBrojRacuna(Pomocno.brojIzmedju(100000, 999999));
+        }
 
         if (PovuciStavke) {
 
@@ -518,7 +525,7 @@ public class ProzorRacun extends javax.swing.JFrame {
             e.setStavkeRacuna(stavke);
 
             for (StavkaRacuna stavka : stavke) {
-                zaPlatit.add(stavka.getUkupnaCijenaProizvoda());
+                zaPlatit = zaPlatit.add(stavka.getUkupnaCijenaProizvoda());
             }
             e.setZaPlatiti(zaPlatit);
         }

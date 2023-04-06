@@ -12,6 +12,7 @@ import edunova.util.OibUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -23,8 +24,6 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
     public List<Blagajnik> read() {
         return session.createQuery("from Blagajnik", Blagajnik.class).list();
     }
-    
-   
 
     @Override
     public void kontrolaUnos() throws EdunovaException {
@@ -179,4 +178,21 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
 
     }
 
+    public Blagajnik Autoriziraj(String username, char[] lozinka) {
+        Blagajnik o = null;
+        try {
+            o = session.createQuery("from Blagajnik o where username=:username ", Blagajnik.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        if (BCrypt.checkpw(new String(lozinka), new String(o.getLozinka()))) {
+            return o;
+        }
+        return null;
+
+    }
 }
