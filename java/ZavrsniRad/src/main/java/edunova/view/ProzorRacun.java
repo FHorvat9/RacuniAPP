@@ -28,6 +28,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import org.hibernate.Session;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
 /**
  *
@@ -54,6 +56,7 @@ public class ProzorRacun extends javax.swing.JFrame {
         obradaProizvod = new ObradaProizvod();
         ucitaj();
         ucitajProizvode();
+        AutoCompleteDecorator.decorate(cmbProizvodi, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
         cmbProizvodi.setSelectedIndex(1);
 
     }
@@ -162,6 +165,17 @@ public class ProzorRacun extends javax.swing.JFrame {
         btnDodajStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDodajStavkuActionPerformed(evt);
+            }
+        });
+
+        spnKolicina.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnKolicinaStateChanged(evt);
+            }
+        });
+        spnKolicina.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                spnKolicinaKeyPressed(evt);
             }
         });
 
@@ -410,6 +424,14 @@ public class ProzorRacun extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnObrisiStavkuActionPerformed
 
+    private void spnKolicinaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnKolicinaKeyPressed
+            
+    }//GEN-LAST:event_spnKolicinaKeyPressed
+
+    private void spnKolicinaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnKolicinaStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spnKolicinaStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -468,6 +490,7 @@ public class ProzorRacun extends javax.swing.JFrame {
         m.addAll(new ObradaProizvod().read());
         cmbProizvodi.setModel(m);
         cmbProizvodi.repaint();
+        
     }
 
 
