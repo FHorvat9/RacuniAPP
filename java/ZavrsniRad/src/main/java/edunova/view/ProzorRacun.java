@@ -4,6 +4,7 @@
  */
 package edunova.view;
 
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import edunova.controller.ObradaProizvod;
 import edunova.controller.ObradaRacun;
 import edunova.model.Blagajnik;
@@ -17,10 +18,12 @@ import edunova.util.Pomocno;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -45,9 +48,25 @@ public class ProzorRacun extends javax.swing.JFrame {
 
     public ProzorRacun() {
         initComponents();
-
+        DatePickerSettings dps = 
+                new DatePickerSettings(new Locale.Builder().setLanguage("hr").setRegion("HR").build());
+       
+       ArrayList<DateTimeFormatter> formatsForParsing = new ArrayList<>();
+       formatsForParsing.add(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+       dps.setFormatForDatesCommonEra("dd.MM.YYYY");
+       dps.setFormatsForParsing(formatsForParsing);
+       
+     
+       
+       
+       dps.setTranslationClear("Očisti");
+       dps.setTranslationToday("Danas");
+      
+       dtpDatum.setSettings(dps);
+        
         buttonGroup1.add(btnPoBlagajniku);
         buttonGroup1.add(btnPoBrRacuna);
+        buttonGroup1.add(btnPoDatumu);
         spnKolicina.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 
         btnPoBlagajniku.setSelected(true);
@@ -71,6 +90,9 @@ public class ProzorRacun extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jFrame1 = new javax.swing.JFrame();
+        btnZatvori = new javax.swing.JButton();
+        dtpDatum = new com.github.lgooddatepicker.components.DatePicker();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstPodaci = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -95,6 +117,39 @@ public class ProzorRacun extends javax.swing.JFrame {
         btnSpremiStavke = new javax.swing.JButton();
         btnObrisiRacun = new javax.swing.JButton();
         btnObrisiStavku = new javax.swing.JButton();
+        btnDatePicker = new javax.swing.JButton();
+        btnPoDatumu = new javax.swing.JRadioButton();
+
+        jFrame1.setSize(new java.awt.Dimension(160, 120));
+        jFrame1.setType(java.awt.Window.Type.POPUP);
+
+        btnZatvori.setText("Postavi Datum");
+        btnZatvori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZatvoriActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnZatvori)
+                    .addComponent(dtpDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(dtpDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnZatvori)
+                .addGap(86, 86, 86))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -200,6 +255,23 @@ public class ProzorRacun extends javax.swing.JFrame {
             }
         });
 
+        btnDatePicker.setText("🗓");
+        btnDatePicker.setMaximumSize(new java.awt.Dimension(30, 30));
+        btnDatePicker.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnDatePicker.setPreferredSize(new java.awt.Dimension(20, 20));
+        btnDatePicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatePickerActionPerformed(evt);
+            }
+        });
+
+        btnPoDatumu.setText("Trazi po datumu");
+        btnPoDatumu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPoDatumuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -209,26 +281,29 @@ public class ProzorRacun extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtTrazilica, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnTrazilica))
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtBlagajnik)
                         .addComponent(txtZaPlatiti)
                         .addComponent(txtDatum)
                         .addComponent(txtBrRacuna, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
-                    .addComponent(btnPoBlagajniku)
-                    .addComponent(btnPoBrRacuna)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnNoviRacun, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnObrisiRacun, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(32, 32, 32)
+                        .addComponent(btnObrisiRacun, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPoDatumu)
+                    .addComponent(btnPoBrRacuna)
+                    .addComponent(btnPoBlagajniku))
+                .addGap(117, 117, 117)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -252,8 +327,8 @@ public class ProzorRacun extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -268,40 +343,46 @@ public class ProzorRacun extends javax.swing.JFrame {
                             .addComponent(btnDodajStavku)
                             .addComponent(btnObrisiStavku))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSpremiStavke)
-                        .addGap(84, 84, 84))
+                        .addComponent(btnSpremiStavke))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnTrazilica)
-                            .addComponent(btnPoBlagajniku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTrazilica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2)
+                        .addGap(3, 3, 3)
+                        .addComponent(txtBrRacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPoBrRacuna)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2)
-                                .addGap(7, 7, 7)
-                                .addComponent(txtBrRacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBlagajnik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtZaPlatiti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnNoviRacun)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnObrisiRacun)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
+                        .addComponent(jLabel3)
+                        .addGap(3, 3, 3)
+                        .addComponent(txtBlagajnik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addGap(3, 3, 3)
+                        .addComponent(txtZaPlatiti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnNoviRacun)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnObrisiRacun)
+                        .addGap(56, 56, 56)))
+                .addGap(84, 84, 84))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnPoBlagajniku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTrazilica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTrazilica)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnPoBrRacuna)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPoDatumu)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -332,12 +413,14 @@ public class ProzorRacun extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTrazilicaActionPerformed
 
     private void btnPoBlagajnikuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoBlagajnikuActionPerformed
-
+        txtTrazilica.setEditable(true);
+        txtTrazilica.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPoBlagajnikuActionPerformed
 
     private void btnPoBrRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoBrRacunaActionPerformed
-
+txtTrazilica.setEditable(true);
+txtTrazilica.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPoBrRacunaActionPerformed
 
@@ -357,6 +440,11 @@ public class ProzorRacun extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNoviRacunActionPerformed
 
     private void btnDodajStavkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajStavkuActionPerformed
+       if(lstPodaci.getSelectedValue()==null){
+           JOptionPane.showMessageDialog(rootPane, "Prvo odaberite racun");
+           return;
+       }
+        
         if (lstStavkeNaRacunu.getModel() == null
                 || !(lstStavkeNaRacunu.getModel() instanceof DefaultListModel<StavkaRacuna>)) {
             lstStavkeNaRacunu.setModel(new DefaultListModel<StavkaRacuna>());
@@ -432,6 +520,26 @@ public class ProzorRacun extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_spnKolicinaStateChanged
 
+    private void btnDatePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatePickerActionPerformed
+        jFrame1.setLocationRelativeTo(null);
+        jFrame1.setVisible(true);
+        btnPoDatumu.doClick();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDatePickerActionPerformed
+
+    private void btnZatvoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZatvoriActionPerformed
+        
+        txtTrazilica.setText(dtpDatum.getText());
+        btnTrazilica.doClick();
+        jFrame1.dispose();
+    }//GEN-LAST:event_btnZatvoriActionPerformed
+
+    private void btnPoDatumuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoDatumuActionPerformed
+        txtTrazilica.setEditable(false);
+        txtTrazilica.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPoDatumuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -495,16 +603,21 @@ public class ProzorRacun extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDatePicker;
     private javax.swing.JButton btnDodajStavku;
     private javax.swing.JButton btnNoviRacun;
     private javax.swing.JButton btnObrisiRacun;
     private javax.swing.JButton btnObrisiStavku;
     private javax.swing.JRadioButton btnPoBlagajniku;
     private javax.swing.JRadioButton btnPoBrRacuna;
+    private javax.swing.JRadioButton btnPoDatumu;
     private javax.swing.JButton btnSpremiStavke;
     private javax.swing.JButton btnTrazilica;
+    private javax.swing.JButton btnZatvori;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Proizvod> cmbProizvodi;
+    private com.github.lgooddatepicker.components.DatePicker dtpDatum;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

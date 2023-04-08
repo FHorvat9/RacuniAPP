@@ -9,7 +9,12 @@ import edunova.model.Entitet;
 import edunova.model.Racun;
 import edunova.util.EdunovaException;
 import edunova.util.Pomocno;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -41,6 +46,16 @@ public class ObradaRacun extends Obrada<Racun> {
                 uvjet = uvjet + "%";
 
                 return session.createQuery("from Racun where cast(brojRacuna as text) like :uvjet", Racun.class).setParameter("uvjet", uvjet).list();
+            case 2:
+            try {
+                System.out.println(uvjet);
+                
+                return session.createQuery("from Racun where cast(datum as Date)=:uvjet", Racun.class).setParameter("uvjet", LocalDate.parse(uvjet, DateTimeFormatter.ofPattern("dd.MM.yyyy"))).list();
+            } catch (Exception e) {
+                
+            }
+             
+             
 
         }
         return null;
