@@ -32,7 +32,7 @@ public class Racun extends Entitet {
     public String toString() {
 
         
-//        return String.format("|%-6s||%-6s||%-22s||%-22s||", brojRacuna,zaPlatiti,df.format(datum),blagajnik.toString());
+
         return String.format("%-6s || %-21s || %s",brojRacuna , Aplikacija.df.format(datum),blagajnik) ;
     }
 
