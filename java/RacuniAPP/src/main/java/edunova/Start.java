@@ -5,9 +5,6 @@ package edunova;
 
 import edunova.util.PocetniInsert;
 import edunova.view.SplashScreen;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -20,6 +17,7 @@ public class Start {
 
 //          new PocetniInsert();
         new SplashScreen().setVisible(true);
+ 
         
         
 

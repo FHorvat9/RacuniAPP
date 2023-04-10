@@ -4,19 +4,12 @@
  */
 package edunova.controller;
 
-import edunova.model.Blagajnik;
-import edunova.model.Entitet;
 import edunova.model.Racun;
 import edunova.util.EdunovaException;
 import edunova.util.Pomocno;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *

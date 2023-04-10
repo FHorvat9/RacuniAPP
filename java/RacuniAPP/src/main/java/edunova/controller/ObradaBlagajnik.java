@@ -6,7 +6,6 @@ package edunova.controller;
 
 import edunova.model.Blagajnik;
 import edunova.model.Racun;
-import edunova.model.StavkaRacuna;
 import edunova.util.EdunovaException;
 import edunova.util.OibUtil;
 import java.util.ArrayList;

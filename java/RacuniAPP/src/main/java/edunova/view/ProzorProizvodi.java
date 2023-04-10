@@ -4,8 +4,6 @@
  */
 package edunova.view;
 
-import edunova.controller.Obrada;
-import edunova.controller.ObradaBlagajnik;
 import edunova.controller.ObradaProizvod;
 import edunova.model.Proizvod;
 import edunova.util.Aplikacija;
@@ -41,9 +39,7 @@ public class ProzorProizvodi extends javax.swing.JFrame {
                         new Locale("hr", "HR"));
         df = new DecimalFormat("###,##0.00", dfs);
         
-        setTitle(Aplikacija.NAZIV_APP + ": "
-                + Aplikacija.OPERATER
-                + ": Proizvodi");
+        setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         ucitaj();
     }
     

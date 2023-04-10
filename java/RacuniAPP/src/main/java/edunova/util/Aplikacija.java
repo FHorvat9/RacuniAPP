@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 
 
 public class Aplikacija {
-    public static final String NAZIV_APP="Edunova aplikacija"; 
+    public static final String NAZIV_APP="RacuniAPP: "; 
     public static String OPERATER="";
     public static Blagajnik ULOGIRANIBLAGAJNIK=null;
     public static SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");

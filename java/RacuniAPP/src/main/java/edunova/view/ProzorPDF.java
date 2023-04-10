@@ -6,7 +6,6 @@ package edunova.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -14,24 +13,23 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import edunova.controller.ObradaRacun;
-import edunova.model.Entitet;
 import edunova.model.Racun;
 import edunova.model.StavkaRacuna;
 import edunova.util.Aplikacija;
+import java.awt.Desktop;
+import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -46,6 +44,7 @@ public class ProzorPDF extends javax.swing.JFrame {
 
     public ProzorPDF() {
         initComponents();
+        setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         obrada = new ObradaRacun();
         buttonGroup1.add(btnPoBlagajniku);
         buttonGroup1.add(btnPoBrRacuna);
@@ -296,33 +295,41 @@ public class ProzorPDF extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Prvo odaberite racun!");
             return;
         }
+        new File("./racuni").mkdir(); 
         Racun r = lstPodaci.getSelectedValue();
-        Document document = new Document() {};
+        Document document = new Document() {
+        };
         try {
-            PdfWriter.getInstance(document, new FileOutputStream(r.getBrojRacuna()+".pdf"));
+            File file = new File("./racuni/"+r.getBrojRacuna() + ".pdf");
+            PdfWriter.getInstance(document, new FileOutputStream(file));
+
         } catch (FileNotFoundException | DocumentException ex) {
-            Logger.getLogger(ProzorPDF.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
 
         document.open();
         Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-//        Chunk chunk = new Chunk("Racun broj: "+r.getBrojRacuna(), font);
-//        Chunk chunk2 = new Chunk(r.getBlagajnik().getUsername(),font);
-        
+
+
         try {
-            document.add(new Paragraph("Blagajnik: "+r.getBlagajnik().getUsername(),font));
-            document.add(new Paragraph("Racun broj: "+r.getBrojRacuna(), font));
-            document.add(new Paragraph("Datum izdatka: "+Aplikacija.df.format(r.getDatum()), font));
+            document.add(new Paragraph("Blagajnik: " + r.getBlagajnik().getUsername(), font));
+            document.add(new Paragraph("Racun broj: " + r.getBrojRacuna(), font));
+            document.add(new Paragraph("Datum izdatka: " + Aplikacija.df.format(r.getDatum()), font));
             document.add(new Paragraph("________________________________________"));
-            for(StavkaRacuna stavka : r.getStavkeRacuna()){
-            document.add(new Paragraph(stavka.getProizvod().getImeProizvoda()+" "+stavka.getCijenaProizvoda()+"kn "+stavka.getKolicina(), font));
+            for (StavkaRacuna stavka : r.getStavkeRacuna()) {
+                document.add(new Paragraph(stavka.getProizvod().getImeProizvoda() + " " + stavka.getCijenaProizvoda() + "kn " + stavka.getKolicina(), font));
             }
             document.add(new Paragraph("________________________________________"));
-            document.add(new Paragraph("Ukupno za platiti: "+r.getZaPlatiti()+"kn",font));
+            document.add(new Paragraph("Ukupno za platiti: " + r.getZaPlatiti() + "kn", font));
         } catch (DocumentException ex) {
-            Logger.getLogger(ProzorPDF.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
         document.close();
+        try {
+            Desktop.getDesktop().open(new File("racuni"));
+        } catch (IOException ex) {
+            
+        }
     }//GEN-LAST:event_btnIspisiActionPerformed
 
     private void ucitaj() {

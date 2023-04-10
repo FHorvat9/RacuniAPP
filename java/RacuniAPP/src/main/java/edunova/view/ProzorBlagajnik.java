@@ -6,7 +6,6 @@ package edunova.view;
 
 import edunova.controller.ObradaBlagajnik;
 import edunova.model.Blagajnik;
-import edunova.model.Proizvod;
 import edunova.util.Aplikacija;
 import edunova.util.EdunovaException;
 import edunova.util.OibUtil;
@@ -31,9 +30,7 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
     public ProzorBlagajnik() {
         initComponents();
         obrada = new ObradaBlagajnik();
-        setTitle(Aplikacija.NAZIV_APP + ": "
-                + Aplikacija.OPERATER
-                + ": Blagajnici");
+        setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         ucitaj();
 
     }

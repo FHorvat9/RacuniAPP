@@ -7,13 +7,9 @@ package edunova.controller;
 import edunova.model.Proizvod;
 import edunova.model.StavkaRacuna;
 import edunova.util.EdunovaException;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 /**
  *

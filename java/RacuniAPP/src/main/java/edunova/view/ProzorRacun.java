@@ -7,8 +7,6 @@ package edunova.view;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import edunova.controller.ObradaProizvod;
 import edunova.controller.ObradaRacun;
-import edunova.model.Blagajnik;
-import edunova.model.Entitet;
 import edunova.model.Proizvod;
 import edunova.model.Racun;
 import edunova.model.StavkaRacuna;
@@ -17,7 +15,6 @@ import edunova.util.EdunovaException;
 import edunova.util.Pomocno;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +27,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
-import org.hibernate.Session;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
@@ -48,6 +44,7 @@ public class ProzorRacun extends javax.swing.JFrame {
 
     public ProzorRacun() {
         initComponents();
+        setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         DatePickerSettings dps = 
                 new DatePickerSettings(new Locale.Builder().setLanguage("hr").setRegion("HR").build());
        

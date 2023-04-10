@@ -4,8 +4,6 @@
  */
 package edunova.util;
 
-import edunova.controller.ObradaRacun;
-import edunova.model.Racun;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
