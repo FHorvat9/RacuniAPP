@@ -73,7 +73,7 @@ public class ProzorRacun extends javax.swing.JFrame {
         ucitaj();
         ucitajProizvode();
         AutoCompleteDecorator.decorate(cmbProizvodi, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
-        cmbProizvodi.setSelectedIndex(1);
+        cmbProizvodi.setSelectedIndex(0);
 
     }
 

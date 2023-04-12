@@ -4,9 +4,30 @@
  */
 package edunova.view;
 
+
+
+import edunova.controller.ObradaBlagajnik;
+import edunova.controller.ObradaGrafPodaci;
+import edunova.controller.ObradaProizvod;
+import edunova.model.GrafPodaci;
+import edunova.model.Proizvod;
 import edunova.util.Aplikacija;
+import java.awt.BorderLayout;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -14,25 +35,66 @@ import java.util.Date;
  */
 public class ProzorIzbornik extends javax.swing.JFrame {
 
+    private ObradaGrafPodaci obrada;
+    private ObradaProizvod obradaProizvod;
+    private ObradaBlagajnik obradaBlagajnik;
+
     /**
      * Creates new form prozorIzbornik
      */
     public ProzorIzbornik() {
         initComponents();
+        ucitajProizvode();
         setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         new Vrijeme().start();
+        obrada = new ObradaGrafPodaci();
+        obradaBlagajnik= new ObradaBlagajnik();
+        obradaProizvod= new ObradaProizvod();
+        AutoCompleteDecorator.decorate(cmbProizvodi, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
         
+        spnGodina.setModel(new SpinnerNumberModel(2013, 2013, LocalDate.now().getYear()-4, 1));
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spnGodina, "0000");
+        spnGodina.setEditor(editor);
+        
+
+        
+
     }
-    
+
+    private void definirajGraf(String imeProizvoda, int godina) {
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        GrafPodaci gf = obrada.read(imeProizvoda, godina);
+        dataset.addValue(gf.getKolicina(), imeProizvoda, godina);
+        gf = obrada.read(imeProizvoda, godina + 1);
+        dataset.addValue(gf.getKolicina(), imeProizvoda, godina + 1);
+        gf = obrada.read(imeProizvoda, godina + 2);
+        dataset.addValue(gf.getKolicina(), imeProizvoda, godina + 2);
+        gf = obrada.read(imeProizvoda, godina + 3);
+        dataset.addValue(gf.getKolicina(), imeProizvoda, godina + 3);
+        gf = obrada.read(imeProizvoda, godina + 4);
+        dataset.addValue(gf.getKolicina(), imeProizvoda, godina + 4);
+        
+
+        JFreeChart chart = ChartFactory.createLineChart("Broj prodanih "+imeProizvoda+" kroz 5 godina", "Godina", "Broj prodanih", dataset,
+                PlotOrientation.VERTICAL, false, true, false);
+
+        ChartPanel cp = new ChartPanel(chart);
+        pnlGraf.removeAll();
+        pnlGraf.setLayout(new BorderLayout());
+        pnlGraf.add(cp, BorderLayout.CENTER);
+        pnlGraf.validate();
+    }
+
     private class Vrijeme extends Thread {
-        
+
         private SimpleDateFormat df;
-        
+
         public Vrijeme() {
             df = new SimpleDateFormat(
                     "dd.MM.YYYY. hh:mm:ss");
         }
-        
+
         @Override
         public void run() {
             while (true) {
@@ -42,11 +104,20 @@ public class ProzorIzbornik extends javax.swing.JFrame {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-                    
+
                 }
             }
         }
-        
+
+    }
+
+    private void ucitajProizvode() {
+        DefaultComboBoxModel<Proizvod> m
+                = new DefaultComboBoxModel<>();
+        m.addAll(new ObradaProizvod().read());
+        cmbProizvodi.setModel(m);
+        cmbProizvodi.repaint();
+
     }
 
     /**
@@ -60,6 +131,12 @@ public class ProzorIzbornik extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         lblVrijeme = new javax.swing.JLabel();
+        btnUcitaj = new javax.swing.JButton();
+        cmbProizvodi = new javax.swing.JComboBox<>();
+        spnGodina = new javax.swing.JSpinner();
+        pnlGraf = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -73,6 +150,28 @@ public class ProzorIzbornik extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
         jToolBar1.add(lblVrijeme);
+
+        btnUcitaj.setText("Ucitaj");
+        btnUcitaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUcitajActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlGrafLayout = new javax.swing.GroupLayout(pnlGraf);
+        pnlGraf.setLayout(pnlGrafLayout);
+        pnlGrafLayout.setHorizontalGroup(
+            pnlGrafLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 546, Short.MAX_VALUE)
+        );
+        pnlGrafLayout.setVerticalGroup(
+            pnlGrafLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 285, Short.MAX_VALUE)
+        );
+
+        jLabel1.setText("Godina");
+
+        jLabel2.setText("Proizvod");
 
         jMenu1.setText("Aplikacija");
 
@@ -128,12 +227,47 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spnGodina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbProizvodi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(35, 35, 35))))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(208, 208, 208)
+                .addComponent(btnUcitaj)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 252, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(pnlGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spnGodina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbProizvodi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUcitaj)
+                .addGap(34, 34, 34)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -142,23 +276,27 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
+
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
+
         new ProzorProizvodi().setVisible(true);
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+
         new ProzorBlagajnik().setVisible(true);
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if(obradaBlagajnik.read().isEmpty() || obradaProizvod.read().isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "Nema unesenih blagajnika ili proizvoda");
+            return;
+        }
         new ProzorRacun().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -168,11 +306,23 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void btnUcitajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajActionPerformed
+        if(cmbProizvodi.getSelectedItem()==null){
+            JOptionPane.showMessageDialog(rootPane, "Prvo odaberite proizvod");
+            return;
+        }
+        definirajGraf(cmbProizvodi.getItemAt(cmbProizvodi.getSelectedIndex()).getImeProizvoda(), (int) spnGodina.getValue());    // TODO add your handling code here:
+    }//GEN-LAST:event_btnUcitajActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUcitaj;
+    private javax.swing.JComboBox<Proizvod> cmbProizvodi;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -183,5 +333,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblVrijeme;
+    private javax.swing.JPanel pnlGraf;
+    private javax.swing.JSpinner spnGodina;
     // End of variables declaration//GEN-END:variables
 }

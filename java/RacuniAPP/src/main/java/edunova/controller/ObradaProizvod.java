@@ -46,6 +46,7 @@ public class ObradaProizvod extends Obrada<Proizvod> {
     @Override
     public void kontrolaPromjena() throws EdunovaException {
         kontrolaImeProizvoda();
+        kontrolaDuploImeProizvoda();
         kontrolaCijenaProzivoda();
 
     }

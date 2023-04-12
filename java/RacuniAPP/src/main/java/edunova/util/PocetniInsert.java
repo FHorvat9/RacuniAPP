@@ -22,9 +22,9 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class PocetniInsert {
 
-    private final int BROJ_BLAGAJNIKA = 10;
-    private final int BROJ_PROIZVODA = 1000;
-    private final int BROJ_RACUNA = 10000;
+    private final int BROJ_BLAGAJNIKA = 20;
+    private final int BROJ_PROIZVODA = 100;
+    private final int BROJ_RACUNA = 1000;
     private final int BROJ_STAVKI = 10;
 
     private Faker faker = new Faker(new Locale.Builder().setLanguage("hr").setRegion("HR").build());
@@ -72,6 +72,8 @@ public class PocetniInsert {
             p = new Proizvod();
             p.setCijena(BigDecimal.valueOf(faker.number().randomDouble(2, 0, 50)));
             p.setImeProizvoda(faker.commerce().productName());
+           
+            
             s.persist(p);
             proizvodi.add(p);
         }
@@ -116,7 +118,7 @@ public class PocetniInsert {
         return tempStavke;
     }
 
-    private void kreirajLoginBlagajnika() {
+    public void kreirajLoginBlagajnika() {
         Blagajnik b = new Blagajnik();
         b.setIme("Filip");
         b.setPrezime("Horvat");
