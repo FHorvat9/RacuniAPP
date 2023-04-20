@@ -4,8 +4,6 @@
  */
 package edunova.view;
 
-
-
 import edunova.controller.ObradaBlagajnik;
 import edunova.controller.ObradaGrafPodaci;
 import edunova.controller.ObradaProizvod;
@@ -49,16 +47,13 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
         new Vrijeme().start();
         obrada = new ObradaGrafPodaci();
-        obradaBlagajnik= new ObradaBlagajnik();
-        obradaProizvod= new ObradaProizvod();
+        obradaBlagajnik = new ObradaBlagajnik();
+        obradaProizvod = new ObradaProizvod();
         AutoCompleteDecorator.decorate(cmbProizvodi, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
-        
-        spnGodina.setModel(new SpinnerNumberModel(2013, 2013, LocalDate.now().getYear()-4, 1));
+
+        spnGodina.setModel(new SpinnerNumberModel(2013, 2013, LocalDate.now().getYear() - 4, 1));
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spnGodina, "0000");
         spnGodina.setEditor(editor);
-        
-
-        
 
     }
 
@@ -75,9 +70,8 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         dataset.addValue(gf.getKolicina(), imeProizvoda, godina + 3);
         gf = obrada.read(imeProizvoda, godina + 4);
         dataset.addValue(gf.getKolicina(), imeProizvoda, godina + 4);
-        
 
-        JFreeChart chart = ChartFactory.createLineChart("Broj prodanih "+imeProizvoda+" kroz 5 godina", "Godina", "Broj prodanih", dataset,
+        JFreeChart chart = ChartFactory.createLineChart("Broj prodanih " + imeProizvoda + " kroz 5 godina", "Godina", "Broj prodanih", dataset,
                 PlotOrientation.VERTICAL, false, true, false);
 
         ChartPanel cp = new ChartPanel(chart);
@@ -142,6 +136,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -191,6 +186,14 @@ public class ProzorIzbornik extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem5);
+
+        jMenuItem6.setText("Odjavi se");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
 
         jMenuItem1.setText("Izlaz");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -308,7 +311,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        if(obradaBlagajnik.read().isEmpty() || obradaProizvod.read().isEmpty()){
+        if (obradaBlagajnik.read().isEmpty() || obradaProizvod.read().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Nema unesenih blagajnika ili proizvoda");
             return;
         }
@@ -322,7 +325,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void btnUcitajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajActionPerformed
-        if(cmbProizvodi.getSelectedItem()==null){
+        if (cmbProizvodi.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(rootPane, "Prvo odaberite proizvod");
             return;
         }
@@ -337,6 +340,11 @@ public class ProzorIzbornik extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_lblGitLinkMouseClicked
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        new ProzorLogin().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,6 +363,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblGitLink;
     private javax.swing.JLabel lblVrijeme;

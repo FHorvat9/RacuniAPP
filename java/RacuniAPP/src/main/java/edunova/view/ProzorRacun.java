@@ -45,22 +45,19 @@ public class ProzorRacun extends javax.swing.JFrame {
     public ProzorRacun() {
         initComponents();
         setTitle("Trenutno ulogiran: " + Aplikacija.OPERATER);
-        DatePickerSettings dps = 
-                new DatePickerSettings(new Locale.Builder().setLanguage("hr").setRegion("HR").build());
-       
-       ArrayList<DateTimeFormatter> formatsForParsing = new ArrayList<>();
-       formatsForParsing.add(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-       dps.setFormatForDatesCommonEra("dd.MM.YYYY");
-       dps.setFormatsForParsing(formatsForParsing);
-       
-     
-       
-       
-       dps.setTranslationClear("Očisti");
-       dps.setTranslationToday("Danas");
-      
-       dtpDatum.setSettings(dps);
-        
+        DatePickerSettings dps
+                = new DatePickerSettings(new Locale.Builder().setLanguage("hr").setRegion("HR").build());
+
+        ArrayList<DateTimeFormatter> formatsForParsing = new ArrayList<>();
+        formatsForParsing.add(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        dps.setFormatForDatesCommonEra("dd.MM.YYYY");
+        dps.setFormatsForParsing(formatsForParsing);
+
+        dps.setTranslationClear("Očisti");
+        dps.setTranslationToday("Danas");
+
+        dtpDatum.setSettings(dps);
+
         buttonGroup1.add(btnPoBlagajniku);
         buttonGroup1.add(btnPoBrRacuna);
         buttonGroup1.add(btnPoDatumu);
@@ -116,6 +113,8 @@ public class ProzorRacun extends javax.swing.JFrame {
         btnObrisiStavku = new javax.swing.JButton();
         btnDatePicker = new javax.swing.JButton();
         btnPoDatumu = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         jFrame1.setSize(new java.awt.Dimension(160, 120));
         jFrame1.setType(java.awt.Window.Type.POPUP);
@@ -200,7 +199,7 @@ public class ProzorRacun extends javax.swing.JFrame {
 
         jLabel3.setText("Blagajnik");
 
-        jLabel4.setText("Ukupna cijena");
+        jLabel4.setText("Ukupna cijena u Kn");
 
         jLabel5.setText("Datum unosa");
 
@@ -269,6 +268,10 @@ public class ProzorRacun extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Proizvod");
+
+        jLabel7.setText("Kolicina (1-100)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -304,22 +307,29 @@ public class ProzorRacun extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSpremiStavke, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(jLabel6)
                         .addGap(295, 295, 295))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmbProizvodi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbProizvodi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(spnKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(spnKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(121, 121, 121))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(btnDodajStavku)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnObrisiStavku)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnDodajStavku)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnObrisiStavku))
+                            .addComponent(btnSpremiStavke, javax.swing.GroupLayout.Alignment.LEADING))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -331,6 +341,10 @@ public class ProzorRacun extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbProizvodi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,7 +354,8 @@ public class ProzorRacun extends javax.swing.JFrame {
                             .addComponent(btnDodajStavku)
                             .addComponent(btnObrisiStavku))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSpremiStavke))
+                        .addComponent(btnSpremiStavke)
+                        .addGap(56, 56, 56))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(3, 3, 3)
@@ -361,8 +376,7 @@ public class ProzorRacun extends javax.swing.JFrame {
                         .addComponent(btnNoviRacun)
                         .addGap(18, 18, 18)
                         .addComponent(btnObrisiRacun)
-                        .addGap(56, 56, 56)))
-                .addGap(84, 84, 84))
+                        .addGap(140, 140, 140))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,8 +430,8 @@ public class ProzorRacun extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPoBlagajnikuActionPerformed
 
     private void btnPoBrRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoBrRacunaActionPerformed
-txtTrazilica.setEditable(true);
-txtTrazilica.setText("");
+        txtTrazilica.setEditable(true);
+        txtTrazilica.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPoBrRacunaActionPerformed
 
@@ -428,7 +442,14 @@ txtTrazilica.setText("");
         try {
             obrada.create();
             ucitaj();
-            lstPodaci.setSelectedIndex((lstPodaci.getModel().getSize()) - 1);
+            lstPodaci.setSelectedIndex(lstPodaci.getModel().getSize() - 1);
+
+            txtTrazilica.setText(txtBrRacuna.getText());
+            btnPoBrRacuna.setSelected(true);
+            btnTrazilica.doClick();
+            lstPodaci.setSelectedIndex(0);
+            txtTrazilica.setText("");
+
         } catch (EdunovaException e) {
             JOptionPane.showMessageDialog(getRootPane(), e.getPoruka());
         }
@@ -437,11 +458,11 @@ txtTrazilica.setText("");
     }//GEN-LAST:event_btnNoviRacunActionPerformed
 
     private void btnDodajStavkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajStavkuActionPerformed
-       if(lstPodaci.getSelectedValue()==null){
-           JOptionPane.showMessageDialog(rootPane, "Prvo odaberite racun");
-           return;
-       }
-        
+        if (lstPodaci.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Prvo odaberite racun");
+            return;
+        }
+
         if (lstStavkeNaRacunu.getModel() == null
                 || !(lstStavkeNaRacunu.getModel() instanceof DefaultListModel<StavkaRacuna>)) {
             lstStavkeNaRacunu.setModel(new DefaultListModel<StavkaRacuna>());
@@ -510,7 +531,7 @@ txtTrazilica.setText("");
     }//GEN-LAST:event_btnObrisiStavkuActionPerformed
 
     private void spnKolicinaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnKolicinaKeyPressed
-            
+
     }//GEN-LAST:event_spnKolicinaKeyPressed
 
     private void spnKolicinaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnKolicinaStateChanged
@@ -525,7 +546,7 @@ txtTrazilica.setText("");
     }//GEN-LAST:event_btnDatePickerActionPerformed
 
     private void btnZatvoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZatvoriActionPerformed
-        
+
         txtTrazilica.setText(dtpDatum.getText());
         btnTrazilica.doClick();
         jFrame1.dispose();
@@ -595,7 +616,7 @@ txtTrazilica.setText("");
         m.addAll(new ObradaProizvod().read());
         cmbProizvodi.setModel(m);
         cmbProizvodi.repaint();
-        
+
     }
 
 
@@ -615,11 +636,13 @@ txtTrazilica.setText("");
     private javax.swing.JComboBox<Proizvod> cmbProizvodi;
     private com.github.lgooddatepicker.components.DatePicker dtpDatum;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<Racun> lstPodaci;

@@ -46,7 +46,7 @@ public class ObradaProizvod extends Obrada<Proizvod> {
     @Override
     public void kontrolaPromjena() throws EdunovaException {
         kontrolaImeProizvoda();
-        kontrolaDuploImeProizvoda();
+        
         kontrolaCijenaProzivoda();
 
     }
@@ -101,8 +101,8 @@ public class ObradaProizvod extends Obrada<Proizvod> {
     }
 
     private void kontrolaImeProizvodaMaxDuzina() throws EdunovaException {
-        if (entitet.getImeProizvoda().trim().length() > 15) {
-            throw new EdunovaException("Ime proizvoda moze imati maksimalno 15 znakova");
+        if (entitet.getImeProizvoda().trim().length() > 40) {
+            throw new EdunovaException("Ime proizvoda moze imati maksimalno 40 znakova");
 
         }
     }

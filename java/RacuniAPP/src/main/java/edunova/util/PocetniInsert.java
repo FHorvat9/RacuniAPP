@@ -87,7 +87,7 @@ public class PocetniInsert {
             r = new Racun();
             indexBlagajnik = Pomocno.brojIzmedju(0, BROJ_BLAGAJNIKA - 1);
             r.setBlagajnik(blagajnici.get(indexBlagajnik));
-            r.setDatum(faker.date().birthday(1, 10));
+            r.setDatum(faker.date().birthday(0, 10));
             r.setBrojRacuna(faker.number().numberBetween(100000, 1000000));
             r.setStavkeRacuna(kreirajStavke(r.getBrojRacuna()));
 

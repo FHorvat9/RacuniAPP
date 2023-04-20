@@ -125,13 +125,11 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1)
-                    .addComponent(txtIme, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txtPrezime, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDodaj)
                     .addComponent(btnPromjeni)
                     .addComponent(btnObrisi)
@@ -139,8 +137,10 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtOib, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGenOib, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                        .addComponent(btnGenOib))
+                    .addComponent(txtPrezime)
+                    .addComponent(txtIme))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +220,7 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
     }//GEN-LAST:event_lstPodaciValueChanged
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-  if (lstPodaci.getSelectedValue() == null) {
+        if (lstPodaci.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(
                     getRootPane(),
                     "Prvo odaberite Blagajnika");
@@ -237,18 +237,19 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
             scrollPane.setPreferredSize(new Dimension(300, 200));
             JOptionPane.showMessageDialog(null, scrollPane, "Blagajnik brisanje upozorenje",
                     JOptionPane.WARNING_MESSAGE);
-            
+
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
-              if (lstPodaci.getSelectedValue() == null) {
+        if (lstPodaci.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(
                     getRootPane(),
                     "Prvo odaberite blagajnika");
             return;
         }
+        obrada.setEntitet(lstPodaci.getSelectedValue());
         napuniModel();
         try {
             obrada.update();
@@ -328,8 +329,8 @@ public class ProzorBlagajnik extends javax.swing.JFrame {
         } catch (Exception e) {
             p.setOib(OibUtil.generirajOib());
         }
-        
-        p.setUsername(p.getIme()+" "+p.getPrezime());
+
+        p.setUsername(p.getIme() + " " + p.getPrezime());
         p.setLozinka(BCrypt.hashpw("123", BCrypt.gensalt()).toCharArray());
 
     }
