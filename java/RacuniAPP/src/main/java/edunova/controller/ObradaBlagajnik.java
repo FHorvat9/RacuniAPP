@@ -44,7 +44,7 @@ public class ObradaBlagajnik extends Obrada<Blagajnik> {
     public void kontrolaBrisanje() throws EdunovaException {
         if (entitet.getRacuni() != null && !entitet.getRacuni().isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            sb.append("Blagajnik se nemoze obrisati jer se nalazi na sljedecim racunima:\n");
+            sb.append("Blagajnik se ne može obrisati jer se nalazi na sljedećim računima:\n");
             List<Integer> sortiraniBrojeviRacuna = new ArrayList<>();
             for (Racun sr : entitet.getRacuni()) {
                 sortiraniBrojeviRacuna.add(sr.getBrojRacuna());

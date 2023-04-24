@@ -189,7 +189,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnTrazilica">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Trazi"/>
+        <Property name="text" type="java.lang.String" value="Tra&#x17e;i"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTrazilicaActionPerformed"/>
@@ -197,7 +197,7 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="btnPoBlagajniku">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Trazi po blagajniku"/>
+        <Property name="text" type="java.lang.String" value="Tra&#x17e;i po blagajniku"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPoBlagajnikuActionPerformed"/>
@@ -205,7 +205,7 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="btnPoBrRacuna">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Trazi po broju racuna"/>
+        <Property name="text" type="java.lang.String" value="Tra&#x17e;i po broju ra&#x10d;una"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPoBrRacunaActionPerformed"/>
@@ -213,7 +213,7 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="btnPoDatumu">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Trazi po datumu"/>
+        <Property name="text" type="java.lang.String" value="Tra&#x17e;i po datumu"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPoDatumuActionPerformed"/>
@@ -221,7 +221,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnIspisi">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ispisi"/>
+        <Property name="text" type="java.lang.String" value="Ispi&#x161;i"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIspisiActionPerformed"/>

@@ -55,7 +55,7 @@ public class ObradaProizvod extends Obrada<Proizvod> {
     public void kontrolaBrisanje() throws EdunovaException {
         if (entitet.getRacuni() != null && !entitet.getRacuni().isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            sb.append("Proizvod se nemoze obrisati jer se nalazi na sljedecim racunima:\n");
+            sb.append("Proizvod se ne može obrisati jer se nalazi na sljedecim računima:\n");
             List<Integer> sortiraniBrojeviRacuna = new ArrayList<>();
             for (StavkaRacuna sr : entitet.getRacuni()) {
                 sortiraniBrojeviRacuna.add(sr.getBrojRacuna());

@@ -144,35 +144,35 @@ public class ProzorPDF extends javax.swing.JFrame {
             }
         });
 
-        btnTrazilica.setText("Trazi");
+        btnTrazilica.setText("Traži");
         btnTrazilica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTrazilicaActionPerformed(evt);
             }
         });
 
-        btnPoBlagajniku.setText("Trazi po blagajniku");
+        btnPoBlagajniku.setText("Traži po blagajniku");
         btnPoBlagajniku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPoBlagajnikuActionPerformed(evt);
             }
         });
 
-        btnPoBrRacuna.setText("Trazi po broju racuna");
+        btnPoBrRacuna.setText("Traži po broju računa");
         btnPoBrRacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPoBrRacunaActionPerformed(evt);
             }
         });
 
-        btnPoDatumu.setText("Trazi po datumu");
+        btnPoDatumu.setText("Traži po datumu");
         btnPoDatumu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPoDatumuActionPerformed(evt);
             }
         });
 
-        btnIspisi.setText("Ispisi");
+        btnIspisi.setText("Ispiši");
         btnIspisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIspisiActionPerformed(evt);

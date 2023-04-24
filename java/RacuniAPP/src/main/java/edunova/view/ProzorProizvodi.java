@@ -116,7 +116,7 @@ public class ProzorProizvodi extends javax.swing.JFrame {
             }
         });
 
-        btnObrisi.setText("Obrisi");
+        btnObrisi.setText("Obriši");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
@@ -129,7 +129,7 @@ public class ProzorProizvodi extends javax.swing.JFrame {
             }
         });
 
-        btnTrazi.setText("Trazi");
+        btnTrazi.setText("Traži");
         btnTrazi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTraziActionPerformed(evt);
@@ -248,11 +248,12 @@ public class ProzorProizvodi extends javax.swing.JFrame {
         if (lstPodaci.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(
                     getRootPane(),
-                    "Prvo odaberite smjer");
+                    "Prvo odaberite proizvod");
             return;
         }
         try {
             obrada.delete();
+            
             ucitaj();
         } catch (EdunovaException e) {
             JTextArea textArea = new JTextArea(e.getPoruka());

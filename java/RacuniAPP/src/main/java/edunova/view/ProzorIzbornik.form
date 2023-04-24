@@ -11,7 +11,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Racun -&gt; PDF"/>
+                <Property name="text" type="java.lang.String" value="Ra&#x10d;un -&gt; PDF"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
@@ -58,7 +58,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Racuni"/>
+                <Property name="text" type="java.lang.String" value="Ra&#x10d;uni"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
@@ -173,7 +173,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnUcitaj">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ucitaj"/>
+        <Property name="text" type="java.lang.String" value="U&#x10d;itaj"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUcitajActionPerformed"/>
@@ -192,6 +192,11 @@
     <Component class="javax.swing.JSpinner" name="spnGodina">
     </Component>
     <Container class="javax.swing.JPanel" name="pnlGraf">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">

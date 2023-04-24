@@ -87,7 +87,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
 
         public Vrijeme() {
             df = new SimpleDateFormat(
-                    "dd.MM.YYYY. hh:mm:ss");
+                    "dd.MM.YYYY. HH:mm:ss");
         }
 
         @Override
@@ -148,12 +148,14 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
         jToolBar1.add(lblVrijeme);
 
-        btnUcitaj.setText("Ucitaj");
+        btnUcitaj.setText("Učitaj");
         btnUcitaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUcitajActionPerformed(evt);
             }
         });
+
+        pnlGraf.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout pnlGrafLayout = new javax.swing.GroupLayout(pnlGraf);
         pnlGraf.setLayout(pnlGrafLayout);
@@ -179,7 +181,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
 
         jMenu1.setText("Aplikacija");
 
-        jMenuItem5.setText("Racun -> PDF");
+        jMenuItem5.setText("Račun -> PDF");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -223,7 +225,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
-        jMenuItem4.setText("Racuni");
+        jMenuItem4.setText("Računi");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -301,6 +303,7 @@ public class ProzorIzbornik extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
         new ProzorProizvodi().setVisible(true);
+        
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

@@ -168,21 +168,21 @@ public class ProzorRacun extends javax.swing.JFrame {
 
         txtBrRacuna.setEditable(false);
 
-        btnTrazilica.setText("Trazi");
+        btnTrazilica.setText("Traži");
         btnTrazilica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTrazilicaActionPerformed(evt);
             }
         });
 
-        btnPoBlagajniku.setText("Trazi po blagajniku");
+        btnPoBlagajniku.setText("Traži po blagajniku");
         btnPoBlagajniku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPoBlagajnikuActionPerformed(evt);
             }
         });
 
-        btnPoBrRacuna.setText("Trazi po broju racuna");
+        btnPoBrRacuna.setText("Traži po broju računa");
         btnPoBrRacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPoBrRacunaActionPerformed(evt);
@@ -195,7 +195,7 @@ public class ProzorRacun extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Broj racuna");
+        jLabel2.setText("Broj računa");
 
         jLabel3.setText("Blagajnik");
 
@@ -205,7 +205,7 @@ public class ProzorRacun extends javax.swing.JFrame {
 
         jLabel6.setText("Trenutne Stavke racuna");
 
-        btnNoviRacun.setText("Novi racun");
+        btnNoviRacun.setText("Novi račun");
         btnNoviRacun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNoviRacunActionPerformed(evt);
@@ -237,14 +237,14 @@ public class ProzorRacun extends javax.swing.JFrame {
             }
         });
 
-        btnObrisiRacun.setText("Obrisi racun");
+        btnObrisiRacun.setText("Obriši račun");
         btnObrisiRacun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiRacunActionPerformed(evt);
             }
         });
 
-        btnObrisiStavku.setText("Obrisi stavku");
+        btnObrisiStavku.setText("Obriši stavku");
         btnObrisiStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiStavkuActionPerformed(evt);
@@ -261,7 +261,7 @@ public class ProzorRacun extends javax.swing.JFrame {
             }
         });
 
-        btnPoDatumu.setText("Trazi po datumu");
+        btnPoDatumu.setText("Traži po datumu");
         btnPoDatumu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPoDatumuActionPerformed(evt);
@@ -270,7 +270,7 @@ public class ProzorRacun extends javax.swing.JFrame {
 
         jLabel1.setText("Proizvod");
 
-        jLabel7.setText("Kolicina (1-100)");
+        jLabel7.setText("Količina (1-100)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -660,7 +660,7 @@ public class ProzorRacun extends javax.swing.JFrame {
         e.setBlagajnik(Aplikacija.ULOGIRANIBLAGAJNIK);
 
         e.setDatum(new Date());
-        BigDecimal zaPlatit = new BigDecimal(BigInteger.ONE);
+        BigDecimal zaPlatit = new BigDecimal(BigInteger.ZERO);
         e.setZaPlatiti(zaPlatit);
 
         if (!PovuciStavke) {

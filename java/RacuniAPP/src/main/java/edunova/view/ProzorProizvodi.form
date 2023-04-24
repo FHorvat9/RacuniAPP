@@ -142,7 +142,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnObrisi">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Obrisi"/>
+        <Property name="text" type="java.lang.String" value="Obri&#x161;i"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObrisiActionPerformed"/>
@@ -155,7 +155,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnTrazi">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Trazi"/>
+        <Property name="text" type="java.lang.String" value="Tra&#x17e;i"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTraziActionPerformed"/>
