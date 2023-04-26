@@ -200,7 +200,6 @@ public class ProzorProizvodi extends javax.swing.JFrame {
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
         obrada.setEntitet(new Proizvod());
-        obrada.setEntitet(lstPodaci.getSelectedValue());
         napuniModel();
         try {
             obrada.create();
@@ -218,6 +217,7 @@ public class ProzorProizvodi extends javax.swing.JFrame {
                     "Prvo odaberite proizvod");
             return;
         }
+        obrada.setEntitet(lstPodaci.getSelectedValue());
         napuniModel();
         try {
             obrada.update();
