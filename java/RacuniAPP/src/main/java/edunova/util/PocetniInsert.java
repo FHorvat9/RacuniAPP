@@ -48,6 +48,8 @@ public class PocetniInsert {
         kreirajRacune();
 
         s.getTransaction().commit();
+        HibernateUtil.CloseSession();
+       
 
     }
 

@@ -29,4 +29,7 @@ public class HibernateUtil {
         return session;
     }
 
+    public static void CloseSession() {
+        session = null;
+    }
 }
